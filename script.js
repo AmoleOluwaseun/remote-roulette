@@ -25,35 +25,33 @@ document.addEventListener('DOMContentLoaded', () => {
     revealBtn.addEventListener('click', () => {
         revealBtn.innerText = 'Calculating...';
         revealBtn.disabled = true;
+        
+        const dice = document.getElementById('dice');
+        dice.classList.add('spinning');
 
+        // Spin for 2.5 seconds directly on the reveal card without showing processing card
         setTimeout(() => {
             hideAllCards();
-            processingCard.classList.remove('hidden-state');
-            processingCard.classList.add('active-state');
+            dice.classList.remove('spinning');
+            
+            // Randomly decide (50% chance for demonstration)
+            const isRemote = Math.random() > 0.5;
 
-            // Simulate 'algorithm' processing time
+            if (isRemote) {
+                remoteCard.classList.remove('hidden-state');
+                remoteCard.classList.add('active-state');
+                resetCheckinForm();
+            } else {
+                officeCard.classList.remove('hidden-state');
+                officeCard.classList.add('active-state');
+            }
+
             setTimeout(() => {
-                hideAllCards();
-                
-                // Randomly decide (50% chance for demonstration)
-                const isRemote = Math.random() > 0.5;
+                revealBtn.innerText = "Reveal Today's Status";
+                revealBtn.disabled = false;
+            }, 500);
 
-                if (isRemote) {
-                    remoteCard.classList.remove('hidden-state');
-                    remoteCard.classList.add('active-state');
-                    resetCheckinForm();
-                } else {
-                    officeCard.classList.remove('hidden-state');
-                    officeCard.classList.add('active-state');
-                }
-
-                setTimeout(() => {
-                    revealBtn.innerText = "Reveal Today's Status";
-                    revealBtn.disabled = false;
-                }, 500);
-
-            }, 2500); 
-        }, 500); 
+        }, 2000); 
     });
 
     resetBtns.forEach(btn => {
