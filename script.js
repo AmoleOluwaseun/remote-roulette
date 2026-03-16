@@ -289,7 +289,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const addStaffBtn = document.getElementById('add-staff-btn');
     const staffEmailListEl = document.getElementById('staff-email-list');
 
-    let staffEmails = ["manager@workspace.com", "lead@workspace.com"];
+    let staffEmails = [];
+
+    // Load initial staff
+    async function loadStaff() {
+        try {
+            const res = await fetch('/api/staff');
+            staffEmails = await res.json();
+            renderStaffList();
+        } catch (err) {
+            console.error("Failed to load staff:", err);
+        }
+    }
 
     // Open Login
     startAdminBtn.addEventListener('click', () => {
@@ -303,7 +314,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (secretInput.value === "Iamthemanager") {
             managerLoginModal.classList.add('hidden-state');
             staffManagementModal.classList.remove('hidden-state');
-            renderStaffList();
+            loadStaff();
         } else {
             loginError.classList.remove('hidden-state');
         }
@@ -319,13 +330,20 @@ document.addEventListener('DOMContentLoaded', () => {
     closeStaffBtn.addEventListener('click', () => staffManagementModal.classList.add('hidden-state'));
 
     // Handle Add Staff
-    addStaffBtn.addEventListener('click', () => {
+    addStaffBtn.addEventListener('click', async () => {
         const email = staffEmailInput.value.trim();
         if (email && email.includes('@')) {
-            if (!staffEmails.includes(email)) {
-                staffEmails.push(email);
+            try {
+                const res = await fetch('/api/staff', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+                staffEmails = await res.json();
                 staffEmailInput.value = '';
                 renderStaffList();
+            } catch (err) {
+                console.error("Failed to add staff:", err);
             }
         }
     });
@@ -336,21 +354,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderStaffList() {
         staffEmailListEl.innerHTML = '';
-        staffEmails.forEach((email, index) => {
+        staffEmails.forEach((email) => {
             const li = document.createElement('li');
             li.innerHTML = `
                 <span>${email}</span>
-                <button class="remove-staff-btn" data-index="${index}">Remove</button>
+                <button class="remove-staff-btn" data-email="${email}">Remove</button>
             `;
             staffEmailListEl.appendChild(li);
         });
 
         // Add remove listeners
         document.querySelectorAll('.remove-staff-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const index = e.target.dataset.index;
-                staffEmails.splice(index, 1);
-                renderStaffList();
+            btn.addEventListener('click', async (e) => {
+                const email = e.target.dataset.email;
+                try {
+                    const res = await fetch('/api/staff', {
+                        method: 'DELETE',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email })
+                    });
+                    staffEmails = await res.json();
+                    renderStaffList();
+                } catch (err) {
+                    console.error("Failed to remove staff:", err);
+                }
             });
         });
     }
