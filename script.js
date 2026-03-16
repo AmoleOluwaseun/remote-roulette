@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // --- Roulette Logic ---
     const revealCard = document.getElementById('reveal-card');
     const processingCard = document.getElementById('processing-card');
     const remoteCard = document.getElementById('remote-card');
@@ -6,8 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const revealBtn = document.getElementById('reveal-btn');
     const resetBtns = document.querySelectorAll('.reset-btn');
-    const checkinToggle = document.getElementById('checkin-toggle');
-    const checkinStatusText = document.getElementById('checkin-status-text');
 
     function hideAllCards() {
         revealCard.classList.remove('active-state');
@@ -24,7 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     revealBtn.addEventListener('click', () => {
-        // Change button state
         revealBtn.innerText = 'Calculating...';
         revealBtn.disabled = true;
 
@@ -43,25 +41,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (isRemote) {
                     remoteCard.classList.remove('hidden-state');
                     remoteCard.classList.add('active-state');
-                    // Reset checkin
-                    checkinToggle.checked = false;
-                    checkinStatusText.innerText = 'Confirm you are online and working.';
+                    resetCheckinForm();
                 } else {
                     officeCard.classList.remove('hidden-state');
                     officeCard.classList.add('active-state');
                 }
 
-                // Restore button for next time
                 setTimeout(() => {
                     revealBtn.innerText = "Reveal Today's Status";
                     revealBtn.disabled = false;
                 }, 500);
 
-            }, 2500); // 2.5 seconds processing
-        }, 500); // short delay before showing processing
+            }, 2500); 
+        }, 500); 
     });
 
-    // Reset logic
     resetBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             hideAllCards();
@@ -70,20 +64,114 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Check-in logic
-    checkinToggle.addEventListener('change', (e) => {
+    // --- Voting Logic ---
+    const dayVotes = document.querySelectorAll('.day-votes .vote-btn');
+    dayVotes.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            dayVotes.forEach(b => b.classList.remove('selected'));
+            e.target.classList.add('selected');
+        });
+    });
+
+    const satVotes = document.querySelectorAll('.satisfaction-votes .sat-btn');
+    satVotes.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            satVotes.forEach(b => b.classList.remove('selected'));
+            e.target.classList.add('selected');
+        });
+    });
+
+    // --- Check-in Radio ---
+    const checkinRadio = document.getElementById('checkin-radio');
+    const checkinStatusText = document.getElementById('checkin-status-text');
+
+    checkinRadio.addEventListener('change', (e) => {
         if (e.target.checked) {
-            checkinStatusText.innerText = "Checked in! Have a great remote day.";
+            checkinStatusText.innerText = "Morning check-in confirmed.";
             checkinStatusText.style.color = "var(--success-green)";
             checkinStatusText.style.fontWeight = "500";
-        } else {
-            checkinStatusText.innerText = "Confirm you are online and working.";
-            checkinStatusText.style.color = "";
-            checkinStatusText.style.fontWeight = "normal";
         }
     });
 
-    // Countdown logic for standup
+    // --- Voice Note Check-out ---
+    const micBtn = document.getElementById('mic-btn');
+    const recordingTime = document.getElementById('recording-time');
+    const submitVoiceBtn = document.getElementById('submit-voice');
+    const checkoutStatusText = document.getElementById('checkout-status-text');
+
+    let isRecording = false;
+    let timerInterval;
+    let seconds = 0;
+
+    function formatTime(sec) {
+        const m = Math.floor(sec / 60).toString().padStart(2, '0');
+        const s = (sec % 60).toString().padStart(2, '0');
+        return `${m}:${s}`;
+    }
+
+    micBtn.addEventListener('click', () => {
+        if (!isRecording) {
+            // Start recording demo
+            isRecording = true;
+            micBtn.classList.add('recording');
+            micBtn.innerText = "Stop";
+            submitVoiceBtn.disabled = true;
+            
+            seconds = 0;
+            recordingTime.innerText = formatTime(seconds);
+            checkoutStatusText.innerText = "Recording...";
+            checkoutStatusText.style.color = "var(--danger-red)";
+            
+            timerInterval = setInterval(() => {
+                seconds++;
+                recordingTime.innerText = formatTime(seconds);
+            }, 1000);
+        } else {
+            // Stop recording demo
+            isRecording = false;
+            clearInterval(timerInterval);
+            micBtn.classList.remove('recording');
+            micBtn.innerText = "Record";
+            submitVoiceBtn.disabled = false;
+            checkoutStatusText.innerText = "Voice note ready. Click Submit.";
+            checkoutStatusText.style.color = "var(--text-secondary)";
+        }
+    });
+
+    submitVoiceBtn.addEventListener('click', () => {
+        checkoutStatusText.innerText = "Check-out completed successfully!";
+        checkoutStatusText.style.color = "var(--success-green)";
+        checkoutStatusText.style.fontWeight = "600";
+        submitVoiceBtn.disabled = true;
+        
+        // Disable mic after submission
+        micBtn.disabled = true;
+        micBtn.style.opacity = "0.5";
+    });
+
+    function resetCheckinForm() {
+        // Reset radio
+        checkinRadio.checked = false;
+        checkinStatusText.innerText = "Confirm you are at your desk.";
+        checkinStatusText.style.color = "";
+        checkinStatusText.style.fontWeight = "normal";
+
+        // Reset voice note
+        isRecording = false;
+        clearInterval(timerInterval);
+        seconds = 0;
+        recordingTime.innerText = "00:00";
+        micBtn.classList.remove('recording');
+        micBtn.innerText = "Record";
+        micBtn.disabled = false;
+        micBtn.style.opacity = "1";
+        submitVoiceBtn.disabled = true;
+        checkoutStatusText.innerText = "Required voice note: What did you do today?";
+        checkoutStatusText.style.color = "var(--text-secondary)";
+        checkoutStatusText.style.fontWeight = "normal";
+    }
+
+    // --- Standup Countdown ---
     let minutes = 30;
     const countdownEl = document.getElementById('standup-countdown');
     if (countdownEl) {
