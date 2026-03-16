@@ -180,4 +180,96 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }, 60000);
     }
+
+    // --- Calendar Modal Logic ---
+    const calendarModal = document.getElementById('calendar-modal');
+    const viewCalendarBtn = document.getElementById('view-calendar-btn');
+    const closeModalBtn = document.getElementById('close-modal-btn');
+    const calendarDays = document.getElementById('calendar-days');
+
+    viewCalendarBtn.addEventListener('click', () => {
+        calendarModal.classList.remove('hidden-state');
+        generateCalendar();
+    });
+
+    closeModalBtn.addEventListener('click', () => {
+        calendarModal.classList.add('hidden-state');
+    });
+
+    // Close on overlay click
+    calendarModal.addEventListener('click', (e) => {
+        if (e.target === calendarModal) {
+            calendarModal.classList.add('hidden-state');
+        }
+    });
+
+    const employees = ["Alex M.", "Sarah J.", "David K.", "Emma W.", "Michael T.", "Olivia L.", "James R.", "Sophia B."];
+    
+    function getRandomWorkers(count) {
+        let shuffled = [...employees].sort(() => 0.5 - Math.random());
+        return shuffled.slice(0, count);
+    }
+
+    function generateCalendar() {
+        calendarDays.innerHTML = '';
+        
+        // Let's hardcode to March 2026 for demonstration
+        // March 2026 starts on a Sunday (0) and has 31 days
+        const startDayIndex = 0; 
+        const totalDays = 31;
+        const todayDate = 16; // March 16th, 2026 to match context
+        
+        // Add empty cells for padding start of month
+        for(let i = 0; i < startDayIndex; i++) {
+            const emptyCell = document.createElement('div');
+            emptyCell.className = 'cal-cell empty';
+            calendarDays.appendChild(emptyCell);
+        }
+
+        // Add days
+        for(let day = 1; day <= totalDays; day++) {
+            const cell = document.createElement('div');
+            cell.className = `cal-cell ${day === todayDate ? 'today' : ''}`;
+            
+            const dateNum = document.createElement('div');
+            dateNum.className = 'cal-date';
+            dateNum.innerText = day;
+            cell.appendChild(dateNum);
+
+            // Determine day of week (0 = Sun, 6 = Sat)
+            const dayOfWeek = (startDayIndex + day - 1) % 7;
+            
+            // Only add workers on weekdays
+            if(dayOfWeek !== 0 && dayOfWeek !== 6) {
+                const officeList = document.createElement('div');
+                officeList.className = 'office-list';
+                
+                // Randomly add 2-4 workers to office
+                const numWorkers = Math.floor(Math.random() * 3) + 2;
+                const workers = getRandomWorkers(numWorkers);
+                
+                workers.forEach(w => {
+                    const wSpan = document.createElement('span');
+                    wSpan.className = 'worker-name';
+                    wSpan.innerText = w;
+                    officeList.appendChild(wSpan);
+                });
+                
+                cell.appendChild(officeList);
+            }
+
+            calendarDays.appendChild(cell);
+        }
+        
+        // Add empty cells for grid padding at end
+        const totalCells = startDayIndex + totalDays;
+        const remainder = totalCells % 7;
+        if(remainder !== 0) {
+            for(let i = 0; i < (7 - remainder); i++) {
+                const emptyCell = document.createElement('div');
+                emptyCell.className = 'cal-cell empty';
+                calendarDays.appendChild(emptyCell);
+            }
+        }
+    }
 });
