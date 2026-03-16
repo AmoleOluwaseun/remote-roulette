@@ -157,6 +157,10 @@
                 </div>
             </div>
         </div>
+
+        <div class="admin-access">
+            <button id="start-admin-btn" class="text-link">Start Management</button>
+        </div>
     </main>
 
     <!-- Calendar Modal -->
@@ -194,6 +198,52 @@
                 <div class="calendar-legend">
                     <span class="legend-item"><span class="legend-dot today"></span> Today</span>
                     <span class="legend-item"><span class="legend-dot office"></span> In Office</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Manager Login Modal -->
+    <div id="manager-login-modal" class="modal-overlay hidden-state">
+        <div class="modal-content small-modal">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <h2>Manager Access</h2>
+                    <p>Enter secret phrase to continue.</p>
+                </div>
+                <button id="close-login-btn" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <input type="password" id="secret-phrase-input" placeholder="Secret phrase...">
+                    <button id="login-submit-btn" class="primary-btn">Login</button>
+                </div>
+                <p id="login-error" class="error-text hidden-state">Incorrect phrase. Access denied.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Staff Management Modal -->
+    <div id="staff-management-modal" class="modal-overlay hidden-state">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <h2>Staff Management</h2>
+                    <p>View and manage team email addresses.</p>
+                </div>
+                <button id="close-staff-btn" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="add-staff-form">
+                    <input type="email" id="staff-email-input" placeholder="Enter staff email...">
+                    <button id="add-staff-btn" class="primary-btn">Add Staff</button>
+                </div>
+                
+                <div class="staff-list-container">
+                    <h3>Added Staff</h3>
+                    <ul id="staff-email-list" class="email-list">
+                        <!-- Emails will be injected here -->
+                    </ul>
                 </div>
             </div>
         </div>

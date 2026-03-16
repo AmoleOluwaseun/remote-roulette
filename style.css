@@ -835,6 +835,105 @@ body {
     border: 1px solid rgba(245, 158, 11, 0.3);
 }
 
+/* Admin / Staff Management Styles */
+.admin-access {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 2rem;
+}
+
+#start-admin-btn {
+    opacity: 0.6;
+    font-size: 0.8rem;
+}
+
+#start-admin-btn:hover {
+    opacity: 1;
+    color: var(--brand-blue);
+}
+
+.small-modal {
+    max-width: 400px;
+}
+
+.modal-body {
+    padding: 2rem;
+}
+
+.input-group, .add-staff-form {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.input-group input, .add-staff-form input {
+    flex-grow: 1;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.95rem;
+}
+
+.input-group input:focus, .add-staff-form input:focus {
+    outline: none;
+    border-color: var(--brand-blue);
+    box-shadow: 0 0 0 3px var(--brand-light);
+}
+
+.error-text {
+    color: var(--danger-red);
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+}
+
+.staff-list-container {
+    margin-top: 2rem;
+}
+
+.staff-list-container h3 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.email-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-height: 250px;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+}
+
+.email-list li {
+    background: white;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.remove-staff-btn {
+    background: none;
+    border: none;
+    color: var(--danger-red);
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+
+.remove-staff-btn:hover {
+    opacity: 1;
+}
+
 @media (max-width: 1000px) {
     .dashboard {
         grid-template-columns: 1fr;

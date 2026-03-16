@@ -272,4 +272,95 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
+
+    // --- Staff Management Logic ---
+    const startAdminBtn = document.getElementById('start-admin-btn');
+    const managerLoginModal = document.getElementById('manager-login-modal');
+    const staffManagementModal = document.getElementById('staff-management-modal');
+    
+    const closeLoginBtn = document.getElementById('close-login-btn');
+    const closeStaffBtn = document.getElementById('close-staff-btn');
+    
+    const secretInput = document.getElementById('secret-phrase-input');
+    const loginSubmitBtn = document.getElementById('login-submit-btn');
+    const loginError = document.getElementById('login-error');
+    
+    const staffEmailInput = document.getElementById('staff-email-input');
+    const addStaffBtn = document.getElementById('add-staff-btn');
+    const staffEmailListEl = document.getElementById('staff-email-list');
+
+    let staffEmails = ["manager@workspace.com", "lead@workspace.com"];
+
+    // Open Login
+    startAdminBtn.addEventListener('click', () => {
+        managerLoginModal.classList.remove('hidden-state');
+        secretInput.value = '';
+        loginError.classList.add('hidden-state');
+    });
+
+    // Handle Login
+    loginSubmitBtn.addEventListener('click', () => {
+        if (secretInput.value === "Iamthemanager") {
+            managerLoginModal.classList.add('hidden-state');
+            staffManagementModal.classList.remove('hidden-state');
+            renderStaffList();
+        } else {
+            loginError.classList.remove('hidden-state');
+        }
+    });
+
+    // Submit on Enter
+    secretInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') loginSubmitBtn.click();
+    });
+
+    // Close Modals
+    closeLoginBtn.addEventListener('click', () => managerLoginModal.classList.add('hidden-state'));
+    closeStaffBtn.addEventListener('click', () => staffManagementModal.classList.add('hidden-state'));
+
+    // Handle Add Staff
+    addStaffBtn.addEventListener('click', () => {
+        const email = staffEmailInput.value.trim();
+        if (email && email.includes('@')) {
+            if (!staffEmails.includes(email)) {
+                staffEmails.push(email);
+                staffEmailInput.value = '';
+                renderStaffList();
+            }
+        }
+    });
+
+    staffEmailInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') addStaffBtn.click();
+    });
+
+    function renderStaffList() {
+        staffEmailListEl.innerHTML = '';
+        staffEmails.forEach((email, index) => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <span>${email}</span>
+                <button class="remove-staff-btn" data-index="${index}">Remove</button>
+            `;
+            staffEmailListEl.appendChild(li);
+        });
+
+        // Add remove listeners
+        document.querySelectorAll('.remove-staff-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const index = e.target.dataset.index;
+                staffEmails.splice(index, 1);
+                renderStaffList();
+            });
+        });
+    }
+
+    // Modal overlay closes
+    [managerLoginModal, staffManagementModal].forEach(modal => {
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.add('hidden-state');
+            }
+        });
+    });
 });
