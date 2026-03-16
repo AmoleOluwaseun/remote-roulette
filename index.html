@@ -14,101 +14,102 @@
     <div class="decor bottom-right"></div>
 
     <main class="dashboard">
-        <div class="left-column">
-            <div class="intro-section">
-                <div class="brand">
-                    <div class="logo-circle"></div>
-                    <span>Workspace</span>
-                </div>
-                <h1>Remote Roulette</h1>
-                <p class="subtitle">Embracing flexibility, maintaining efficiency.</p>
-                
-                <div class="info-card">
-                    <h3>Why Random?</h3>
-                    <p>We are excited to introduce a one-day remote working system. To ensure our operations remain highly efficient and coverage is evenly spread, your remote day is randomized each week. This keeps things fair and prevents predictable absences from impacting workflow.</p>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="roulette-section">
-            <div id="reveal-card" class="card active-state">
-                <div class="dice-container">
-                    <div id="dice" class="dice">
-                        <div class="face front"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
-                        <div class="face right"><div class="dot"></div><div class="dot"></div></div>
-                        <div class="face top"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
-                        <div class="face bottom"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
-                        <div class="face left"><div class="dot"></div></div>
-                        <div class="face back"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+        <div class="top-content">
+            <div class="left-column">
+                <div class="intro-section">
+                    <div class="brand">
+                        <div class="logo-circle"></div>
+                        <span>Workspace</span>
                     </div>
-                </div>
-                <h2>Ready to spin?</h2>
-                <p>Discover your work location for today.</p>
-                <button id="reveal-btn" class="primary-btn pulse">Reveal Today's Status</button>
-            </div>
-
-            <div id="processing-card" class="card hidden-state">
-                <div class="spinner"></div>
-                <h2>Randomizing Schedule...</h2>
-                <p>Generating your optimal work location.</p>
-            </div>
-
-            <div id="remote-card" class="card result-card hidden-state">
-                <div class="status-badge remote-badge">Remote Day</div>
-                <h2 class="result-title">Working from Home!</h2>
-                <p class="result-desc">Enjoy your remote day. Please complete your check-in and join the daily standup.</p>
-                
-                <div class="action-list">
-                    <div class="action-item">
-                        <div class="action-text">
-                            <h4>Daily Standup</h4>
-                            <p>Required 30-minute sync. (<span id="standup-countdown">30m</span> left)</p>
-                        </div>
-                        <button class="join-btn">Join Call</button>
-                    </div>
-
-                    <div class="action-item">
-                        <div class="action-text">
-                            <h4>1. Morning Check-in</h4>
-                            <p id="checkin-status-text">Confirm you are at your desk.</p>
-                        </div>
-                        <label class="radio-container">
-                            <input type="radio" name="checkin" id="checkin-radio">
-                            <span class="radio-label">I'm Online</span>
-                        </label>
-                    </div>
+                    <h1>Remote Roulette</h1>
+                    <p class="subtitle">Embracing flexibility, maintaining efficiency.</p>
                     
-                    <div class="action-item checkout-box">
-                        <div class="action-text">
-                            <h4>2. Evening Check-out</h4>
-                            <p id="checkout-status-text">Required voice note: What did you do today?</p>
-                        </div>
-                        <div class="voice-recorder">
-                            <button id="mic-btn" class="text-mic-btn">Record</button>
-                            <span id="recording-time">00:00</span>
-                            <button id="submit-voice" class="submit-voice-btn" disabled>Submit</button>
-                        </div>
+                    <div class="info-card">
+                        <h3>Why Random?</h3>
+                        <p>We are excited to introduce a one-day remote working system. To ensure our operations remain highly efficient and coverage is evenly spread, your remote day is randomized each week. This keeps things fair and prevents predictable absences from impacting workflow.</p>
                     </div>
                 </div>
-                <button class="reset-btn text-link">Reset for Demo</button>
             </div>
 
-            <div id="office-card" class="card result-card hidden-state">
-                <div class="status-badge office-badge">Office Day</div>
-                <h2 class="result-title">See You at the Office!</h2>
-                <p class="result-desc">Head in and collaborate with the team today.</p>
-                
-                <div class="action-list">
-                    <div class="action-item">
-                        <div class="action-text">
-                            <h4>Building Access</h4>
-                            <p>Your access card is active for entry.</p>
+            <div class="roulette-section">
+                <div id="reveal-card" class="card active-state">
+                    <div class="dice-container">
+                        <div id="dice" class="dice">
+                            <div class="face front"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+                            <div class="face right"><div class="dot"></div><div class="dot"></div></div>
+                            <div class="face top"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+                            <div class="face bottom"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+                            <div class="face left"><div class="dot"></div></div>
+                            <div class="face back"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
                         </div>
-                        <div class="status-indicator">Active</div>
                     </div>
+                    <h2>Ready to spin?</h2>
+                    <p>Discover your work location for today.</p>
+                    <button id="reveal-btn" class="primary-btn pulse">Reveal Today's Status</button>
                 </div>
-                <button class="reset-btn text-link">Reset for Demo</button>
+
+                <div id="processing-card" class="card hidden-state">
+                    <div class="spinner"></div>
+                    <h2>Randomizing Schedule...</h2>
+                    <p>Generating your optimal work location.</p>
+                </div>
+
+                <div id="remote-card" class="card result-card hidden-state">
+                    <div class="status-badge remote-badge">Remote Day</div>
+                    <h2 class="result-title">Working from Home!</h2>
+                    <p class="result-desc">Enjoy your remote day. Please complete your check-in and join the daily standup.</p>
+                    
+                    <div class="action-list">
+                        <div class="action-item">
+                            <div class="action-text">
+                                <h4>Daily Standup</h4>
+                                <p>Required 30-minute sync. (<span id="standup-countdown">30m</span> left)</p>
+                            </div>
+                            <button class="join-btn">Join Call</button>
+                        </div>
+
+                        <div class="action-item">
+                            <div class="action-text">
+                                <h4>1. Morning Check-in</h4>
+                                <p id="checkin-status-text">Confirm you are at your desk.</p>
+                            </div>
+                            <label class="radio-container">
+                                <input type="radio" name="checkin" id="checkin-radio">
+                                <span class="radio-label">I'm Online</span>
+                            </label>
+                        </div>
+                        
+                        <div class="action-item checkout-box">
+                            <div class="action-text">
+                                <h4>2. Evening Check-out</h4>
+                                <p id="checkout-status-text">Required voice note: What did you do today?</p>
+                            </div>
+                            <div class="voice-recorder">
+                                <button id="mic-btn" class="text-mic-btn">Record</button>
+                                <span id="recording-time">00:00</span>
+                                <button id="submit-voice" class="submit-voice-btn" disabled>Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="reset-btn text-link">Reset for Demo</button>
+                </div>
+
+                <div id="office-card" class="card result-card hidden-state">
+                    <div class="status-badge office-badge">Office Day</div>
+                    <h2 class="result-title">See You at the Office!</h2>
+                    <p class="result-desc">Head in and collaborate with the team today.</p>
+                    
+                    <div class="action-list">
+                        <div class="action-item">
+                            <div class="action-text">
+                                <h4>Building Access</h4>
+                                <p>Your access card is active for entry.</p>
+                            </div>
+                            <div class="status-indicator">Active</div>
+                        </div>
+                    </div>
+                    <button class="reset-btn text-link">Reset for Demo</button>
+                </div>
             </div>
         </div>
 
