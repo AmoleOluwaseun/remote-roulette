@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remote Roulette</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-animation">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <main class="container">
+        <header>
+            <h1>Remote Roulette</h1>
+            <p>Your daily work location, revealed.</p>
+        </header>
+
+        <section id="reveal-section" class="card glass-panel visible">
+            <div class="scanner-container">
+                <div class="scanner-line"></div>
+                <button id="reveal-btn" class="glow-button">Reveal Today's Status</button>
+            </div>
+        </section>
+
+        <!-- Loading / Spinning State -->
+        <section id="processing-section" class="card glass-panel hidden">
+            <div class="spinner"></div>
+            <h2>Processing your schedule...</h2>
+        </section>
+
+        <!-- Result: Remote Day -->
+        <section id="remote-section" class="card glass-panel result-card hidden">
+            <div class="status-badge remote">Remote Day</div>
+            <h2 class="result-title">You're Working From Home! 🎉</h2>
+            <p class="result-desc">Enjoy the flexibility. Remember to check in and attend the standup.</p>
+            
+            <div class="action-dock">
+                <div class="action-item">
+                    <div class="action-info">
+                        <h3>Online Check-in</h3>
+                        <p>Let the team know you're online.</p>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="checkin-toggle">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                
+                <div class="action-item">
+                    <div class="action-info">
+                        <h3>Daily Standup</h3>
+                        <p>Starts at 10:00 AM (<span id="standup-countdown">30m</span>)</p>
+                    </div>
+                    <button class="join-btn pulse-glow">Join Call (30 mins)</button>
+                </div>
+            </div>
+            <button class="reset-btn outline-btn">Reset (Demo)</button>
+        </section>
+
+        <!-- Result: Office Day -->
+        <section id="office-section" class="card glass-panel result-card hidden">
+            <div class="status-badge office">Office Day</div>
+            <h2 class="result-title">See You at the Office! 🏢</h2>
+            <p class="result-desc">Time to collaborate in person. Grab a coffee on your way in.</p>
+            
+            <div class="action-dock">
+                <div class="action-item">
+                    <div class="action-info">
+                        <h3>Desk Booking</h3>
+                        <p>You have a desk assigned automatically.</p>
+                    </div>
+                    <span class="badge gray">Assigned</span>
+                </div>
+            </div>
+            <button class="reset-btn outline-btn">Reset (Demo)</button>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
