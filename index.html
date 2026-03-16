@@ -3,84 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Remote Roulette</title>
+    <title>Remote Roulette | Team Workspace</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="background-animation">
-        <div class="blob blob-1"></div>
-        <div class="blob blob-2"></div>
-        <div class="blob blob-3"></div>
-    </div>
+    <div class="decor top-left"></div>
+    <div class="decor bottom-right"></div>
 
-    <main class="container">
-        <header>
+    <main class="dashboard">
+        <div class="intro-section">
+            <div class="brand">
+                <div class="logo-circle"></div>
+                <span>Workspace</span>
+            </div>
             <h1>Remote Roulette</h1>
-            <p>Your daily work location, revealed.</p>
-        </header>
-
-        <section id="reveal-section" class="card glass-panel visible">
-            <div class="scanner-container">
-                <div class="scanner-line"></div>
-                <button id="reveal-btn" class="glow-button">Reveal Today's Status</button>
-            </div>
-        </section>
-
-        <!-- Loading / Spinning State -->
-        <section id="processing-section" class="card glass-panel hidden">
-            <div class="spinner"></div>
-            <h2>Processing your schedule...</h2>
-        </section>
-
-        <!-- Result: Remote Day -->
-        <section id="remote-section" class="card glass-panel result-card hidden">
-            <div class="status-badge remote">Remote Day</div>
-            <h2 class="result-title">You're Working From Home! 🎉</h2>
-            <p class="result-desc">Enjoy the flexibility. Remember to check in and attend the standup.</p>
+            <p class="subtitle">Embracing flexibility, maintaining efficiency.</p>
             
-            <div class="action-dock">
-                <div class="action-item">
-                    <div class="action-info">
-                        <h3>Online Check-in</h3>
-                        <p>Let the team know you're online.</p>
-                    </div>
-                    <label class="switch">
-                        <input type="checkbox" id="checkin-toggle">
-                        <span class="slider round"></span>
-                    </label>
-                </div>
+            <div class="info-card">
+                <h3>Why Random?</h3>
+                <p>We are excited to introduce a one-day remote working system to help our staff balance their lives. To ensure our operations remain highly efficient and coverage is evenly spread, your remote day is randomized each week. This keeps things fair and prevents predictable absences from impacting our workflow.</p>
+            </div>
+        </div>
+
+        <div class="roulette-section">
+            <!-- Initial State -->
+            <div id="reveal-card" class="card active-state">
+                <div class="icon-placeholder">🎲</div>
+                <h2>Ready to spin?</h2>
+                <p>Discover your work location for today.</p>
+                <button id="reveal-btn" class="primary-btn pulse">Reveal Today's Status</button>
+            </div>
+
+            <!-- Loading State -->
+            <div id="processing-card" class="card hidden-state">
+                <div class="spinner"></div>
+                <h2>Randomizing Schedule...</h2>
+                <p>Generating your optimal work location.</p>
+            </div>
+
+            <!-- Remote Result -->
+            <div id="remote-card" class="card result-card hidden-state">
+                <div class="status-badge remote-badge">Remote Day</div>
+                <h2 class="result-title">Working from Home! 🎉</h2>
+                <p class="result-desc">Enjoy your remote day. Please complete your check-in and join the daily standup.</p>
                 
-                <div class="action-item">
-                    <div class="action-info">
-                        <h3>Daily Standup</h3>
-                        <p>Starts at 10:00 AM (<span id="standup-countdown">30m</span>)</p>
+                <div class="action-list">
+                    <div class="action-item">
+                        <div class="action-text">
+                            <h4>Online Check-in</h4>
+                            <p id="checkin-status-text">Confirm you are online and working.</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="checkin-toggle">
+                            <span class="toggle-slider"></span>
+                        </label>
                     </div>
-                    <button class="join-btn pulse-glow">Join Call (30 mins)</button>
+                    
+                    <div class="action-item">
+                        <div class="action-text">
+                            <h4>Daily Standup</h4>
+                            <p>Required 30-minute sync. (<span id="standup-countdown">30m</span> left)</p>
+                        </div>
+                        <button class="join-btn">Join Video Call</button>
+                    </div>
                 </div>
+                <button class="reset-btn text-link">Reset for Demo</button>
             </div>
-            <button class="reset-btn outline-btn">Reset (Demo)</button>
-        </section>
 
-        <!-- Result: Office Day -->
-        <section id="office-section" class="card glass-panel result-card hidden">
-            <div class="status-badge office">Office Day</div>
-            <h2 class="result-title">See You at the Office! 🏢</h2>
-            <p class="result-desc">Time to collaborate in person. Grab a coffee on your way in.</p>
-            
-            <div class="action-dock">
-                <div class="action-item">
-                    <div class="action-info">
-                        <h3>Desk Booking</h3>
-                        <p>You have a desk assigned automatically.</p>
+            <!-- Office Result -->
+            <div id="office-card" class="card result-card hidden-state">
+                <div class="status-badge office-badge">Office Day</div>
+                <h2 class="result-title">See You at the Office! 🏢</h2>
+                <p class="result-desc">Head in and collaborate with the team today.</p>
+                
+                <div class="action-list">
+                    <div class="action-item">
+                        <div class="action-text">
+                            <h4>Building Access</h4>
+                            <p>Your access card is active for entry.</p>
+                        </div>
+                        <div class="status-indicator">Active</div>
                     </div>
-                    <span class="badge gray">Assigned</span>
                 </div>
+                <button class="reset-btn text-link">Reset for Demo</button>
             </div>
-            <button class="reset-btn outline-btn">Reset (Demo)</button>
-        </section>
+        </div>
     </main>
 
     <script src="script.js"></script>
