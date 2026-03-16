@@ -316,7 +316,11 @@ body {
 .face.bottom { transform: rotateX(-90deg) translateZ(32px); }
 
 /* Dot placement using grid */
-.face.front .dot:nth-child(1) { grid-column: 2; grid-row: 2; }
+.face.front .dot:nth-child(1) { grid-column: 1; grid-row: 1; }
+.face.front .dot:nth-child(2) { grid-column: 3; grid-row: 1; }
+.face.front .dot:nth-child(3) { grid-column: 2; grid-row: 2; }
+.face.front .dot:nth-child(4) { grid-column: 1; grid-row: 3; }
+.face.front .dot:nth-child(5) { grid-column: 3; grid-row: 3; }
 
 .face.right .dot:nth-child(1) { grid-column: 3; grid-row: 1; }
 .face.right .dot:nth-child(2) { grid-column: 1; grid-row: 3; }
@@ -330,11 +334,7 @@ body {
 .face.bottom .dot:nth-child(3) { grid-column: 1; grid-row: 3; }
 .face.bottom .dot:nth-child(4) { grid-column: 3; grid-row: 3; }
 
-.face.left .dot:nth-child(1) { grid-column: 1; grid-row: 1; }
-.face.left .dot:nth-child(2) { grid-column: 3; grid-row: 1; }
-.face.left .dot:nth-child(3) { grid-column: 2; grid-row: 2; }
-.face.left .dot:nth-child(4) { grid-column: 1; grid-row: 3; }
-.face.left .dot:nth-child(5) { grid-column: 3; grid-row: 3; }
+.face.left .dot:nth-child(1) { grid-column: 2; grid-row: 2; }
 
 .face.back .dot:nth-child(1) { grid-column: 1; grid-row: 1; }
 .face.back .dot:nth-child(2) { grid-column: 3; grid-row: 1; }
