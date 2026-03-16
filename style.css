@@ -139,10 +139,19 @@ body {
     margin-bottom: 0.5rem;
 }
 
+.subtitle-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
 .subtitle {
     font-size: 1.15rem;
     color: var(--text-secondary);
-    margin-bottom: 1.5rem;
+    margin: 0;
 }
 
 .info-card {
