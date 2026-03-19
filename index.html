@@ -223,6 +223,44 @@
         </div>
     </div>
 
+    <!-- Manager Menu Modal -->
+    <div id="manager-menu-modal" class="modal-overlay hidden-state">
+        <div class="modal-content small-modal">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <h2>Manager Dashboard</h2>
+                    <p>Select an action to perform.</p>
+                </div>
+                <button id="close-menu-btn" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="menu-actions">
+                    <button id="menu-create-btn" class="menu-btn">
+                        <span class="icon">📅</span>
+                        <div class="btn-text">
+                            <strong>Create Schedule</strong>
+                            <span>Generate new assignments</span>
+                        </div>
+                    </button>
+                    <button id="menu-add-staff-btn" class="menu-btn">
+                        <span class="icon">👤</span>
+                        <div class="btn-text">
+                            <strong>Add Staff</strong>
+                            <span>Manage team members</span>
+                        </div>
+                    </button>
+                    <button id="menu-view-sched-btn" class="menu-btn">
+                        <span class="icon">👁️</span>
+                        <div class="btn-text">
+                            <strong>View Weekly Schedule</strong>
+                            <span>Check current coverage</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Staff Management Modal -->
     <div id="staff-management-modal" class="modal-overlay hidden-state">
         <div class="modal-content">
