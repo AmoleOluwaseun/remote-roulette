@@ -206,6 +206,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const employees = ["Alex M.", "Sarah J.", "David K.", "Emma W.", "Michael T.", "Olivia L.", "James R.", "Sophia B."];
     
+    let currentSchedule = {}; // Will hold the saved schedule { "16": [{email, location, status}, ...], ... }
+
+    async function loadSchedule() {
+        try {
+            const res = await fetch('/api/schedule');
+            currentSchedule = await res.json();
+            // If empty, generateCalendar will still show random demo or nothing
+        } catch (err) {
+            console.error("Failed to load schedule:", err);
+        }
+    }
+
     function getRandomWorkers(count) {
         let shuffled = [...employees].sort(() => 0.5 - Math.random());
         return shuffled.slice(0, count);
@@ -247,38 +259,56 @@ document.addEventListener('DOMContentLoaded', () => {
             const officeList = document.createElement('div');
             officeList.className = 'office-list';
             
+            // Check if we have generated schedule for this day
+            const scheduledStaff = currentSchedule[dayNum] || [];
+
             // 0=Sun, 6=Sat
             if(i !== 0 && i !== 6) {
-                // Use actual staff members if available, otherwise fallback to random
-                let workersToDisplay = [];
-                if (staffMembers && staffMembers.length > 0) {
-                    // Randomly pick a few from actual staff
-                    const num = Math.min(staffMembers.length, Math.floor(Math.random() * 3) + 2);
-                    workersToDisplay = [...staffMembers].sort(() => 0.5 - Math.random()).slice(0, num);
+                // Determine display list
+                let displayList = [];
+
+                if (scheduledStaff.length > 0) {
+                    // Filter for only 'Onsite' staff to show in 'Office List'
+                    displayList = scheduledStaff.filter(s => s.status === 'Onsite');
                 } else {
-                    // Fallback to demo names
+                    // Fallback to demo names if no schedule exists yet
                     const num = Math.floor(Math.random() * 3) + 2;
-                    workersToDisplay = getRandomWorkers(num).map(name => ({ email: name, location: Math.random() > 0.5 ? 'Lagos' : 'Ibadan' }));
+                    displayList = getRandomWorkers(num).map(name => ({ email: name, location: Math.random() > 0.5 ? 'Lagos' : 'Ibadan' }));
                 }
-                
-                workersToDisplay.forEach(staff => {
-                    const badge = document.createElement('div');
-                    badge.className = 'worker-badge';
+
+                if (displayList.length === 0 && scheduledStaff.some(s => s.status === 'Holiday')) {
+                    const holidayMsg = document.createElement('span');
+                    holidayMsg.className = 'holiday-msg';
+                    holidayMsg.innerText = "Public Holiday - Office Closed";
+                    holidayMsg.style.color = "var(--danger-red)";
+                    holidayMsg.style.fontWeight = "600";
+                    officeList.appendChild(holidayMsg);
+                } else {
+                    displayList.forEach(staff => {
+                        const badge = document.createElement('div');
+                        badge.className = 'worker-badge';
+                        
+                        const nameSpan = document.createElement('span');
+                        nameSpan.className = 'worker-name';
+                        const displayName = staff.email.includes('@') ? staff.email.split('@')[0] : staff.email;
+                        nameSpan.innerText = displayName;
+                        
+                        const locSpan = document.createElement('span');
+                        locSpan.className = `worker-location ${staff.location.toLowerCase()}`;
+                        locSpan.innerText = staff.location;
+                        
+                        badge.appendChild(nameSpan);
+                        badge.appendChild(locSpan);
+                        officeList.appendChild(badge);
+                    });
                     
-                    const nameSpan = document.createElement('span');
-                    nameSpan.className = 'worker-name';
-                    // Just show the part before @ for email or full name if it's already a name
-                    const displayName = staff.email.includes('@') ? staff.email.split('@')[0] : staff.email;
-                    nameSpan.innerText = displayName;
-                    
-                    const locSpan = document.createElement('span');
-                    locSpan.className = `worker-location ${staff.location.toLowerCase()}`;
-                    locSpan.innerText = staff.location;
-                    
-                    badge.appendChild(nameSpan);
-                    badge.appendChild(locSpan);
-                    officeList.appendChild(badge);
-                });
+                    if (displayList.length === 0 && scheduledStaff.length > 0) {
+                        const remoteMsg = document.createElement('span');
+                        remoteMsg.innerText = "All Staff Remote";
+                        remoteMsg.style.color = "var(--text-secondary)";
+                        officeList.appendChild(remoteMsg);
+                    }
+                }
             } else {
                 const weekendMsg = document.createElement('span');
                 weekendMsg.className = 'weekend-msg';
@@ -327,16 +357,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let staffMembers = [];
 
-    // Load initial staff
-    async function loadStaff() {
-        try {
-            const res = await fetch('/api/staff');
-            staffMembers = await res.json();
-            renderStaffList();
-        } catch (err) {
-            console.error("Failed to load staff:", err);
-        }
+    // Load initial staff and schedule
+    async function loadData() {
+        await loadStaff();
+        await loadSchedule();
     }
+    loadData();
 
     // Open Login
     startAdminBtn.addEventListener('click', () => {
@@ -392,19 +418,122 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Handle Holiday Selection & Proceed
     const proceedToAlgBtn = document.getElementById('proceed-to-alg-btn');
+    const processingModal = document.getElementById('processing-modal');
     let selectedHolidays = [];
 
-    proceedToAlgBtn.addEventListener('click', () => {
+    proceedToAlgBtn.addEventListener('click', async () => {
         selectedHolidays = Array.from(document.querySelectorAll('.holiday-checkbox:checked')).map(cb => parseInt(cb.value));
-        console.log("Holidays selected:", selectedHolidays);
         
-        // Final generation logic will go here
-        alert(`Generating schedule... Excluding days: ${selectedHolidays.length > 0 ? selectedHolidays.join(', ') : 'None'}`);
-        
-        // For now, just close and go back to menu
         createScheduleModal.classList.add('hidden-state');
-        managerMenuModal.classList.remove('hidden-state');
+        processingModal.classList.remove('hidden-state');
+
+        // Delay for dramatic effect (and to simulate generation)
+        setTimeout(async () => {
+            await generateWeeklySchedule(selectedHolidays);
+            processingModal.classList.add('hidden-state');
+            
+            // Show the calendar with new schedule
+            calendarModal.classList.remove('hidden-state');
+            backToMenuFromSched.classList.remove('hidden-state');
+            generateCalendar();
+        }, 2000);
     });
+
+    async function generateWeeklySchedule(holidays) {
+        const locations = ['Lagos', 'Ibadan'];
+        const workingDays = [16, 17, 18, 19, 20]; // Mon-Fri
+        const newSchedule = { "15": [], "16": [], "17": [], "18": [], "19": [], "20": [], "21": [] };
+
+        // Group staff
+        const staffByLoc = {
+            'Lagos': staffMembers.filter(s => s.location === 'Lagos'),
+            'Ibadan': staffMembers.filter(s => s.location === 'Ibadan')
+        };
+
+        locations.forEach(loc => {
+            const locStaff = staffByLoc[loc];
+            if (locStaff.length === 0) return;
+
+            let attempt = 0;
+            let success = false;
+
+            while (!success && attempt < 100) {
+                attempt++;
+                const trialAssignments = {}; // {email: [offsite_days]}
+                locStaff.forEach(s => trialAssignments[s.email] = []);
+
+                const currentLocSchedule = {};
+                workingDays.forEach(d => currentLocSchedule[d] = []);
+
+                // Rule 1: Monday Onsite
+                locStaff.forEach(s => currentLocSchedule[16].push({ ...s, status: 'Onsite' }));
+
+                // Rule 4: Pick 2 Offsite days per staff from Tue-Fri
+                const tueFri = [17, 18, 19, 20];
+                const validTueFri = tueFri.filter(d => !holidays.includes(d));
+
+                locStaff.forEach(s => {
+                    if (validTueFri.length <= 2) {
+                        // If only 1-2 days left, they have to be offsite on those? 
+                        // User: "Every staff only has 2 days off site even in event of holiday"
+                        // I'll pick up to 2.
+                        const shuffled = [...validTueFri].sort(() => 0.5 - Math.random());
+                        trialAssignments[s.email] = shuffled.slice(0, 2);
+                    } else {
+                        // Try to pick 2 non-consecutive
+                        let picks = [];
+                        let p_attempts = 0;
+                        while(picks.length < 2 && p_attempts < 20) {
+                            p_attempts++;
+                            const d = validTueFri[Math.floor(Math.random() * validTueFri.length)];
+                            if (!picks.includes(d)) {
+                                // Rule 5: No consecutive offsite
+                                const isConsec = picks.some(p => Math.abs(p - d) === 1);
+                                if (!isConsec) picks.push(d);
+                            }
+                        }
+                        trialAssignments[s.email] = picks;
+                    }
+                });
+
+                // Assign statuses for Tue-Fri based on trial
+                tueFri.forEach(d => {
+                    if (holidays.includes(d)) {
+                        locStaff.forEach(s => currentLocSchedule[d].push({ ...s, status: 'Holiday' }));
+                    } else {
+                        locStaff.forEach(s => {
+                            const status = trialAssignments[s.email].includes(d) ? 'Offsite' : 'Onsite';
+                            currentLocSchedule[d].push({ ...s, status });
+                        });
+                    }
+                });
+
+                // Rule 3: Min 2 onsite per day (for working days T-F)
+                const rule3Broken = tueFri.some(d => {
+                    if (holidays.includes(d)) return false;
+                    const onsiteCount = currentLocSchedule[d].filter(s => s.status === 'Onsite').length;
+                    return onsiteCount < 2 && locStaff.length >= 2;
+                });
+
+                if (!rule3Broken) {
+                    success = true;
+                    // Merge into main schedule
+                    Object.keys(currentLocSchedule).forEach(d => {
+                        newSchedule[d] = [...newSchedule[d], ...currentLocSchedule[d]];
+                    });
+                }
+            }
+        });
+
+        // Save to server
+        await fetch('/api/schedule', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newSchedule)
+        });
+        
+        currentSchedule = newSchedule;
+    }
 
     // Submit on Enter
     secretInput.addEventListener('keypress', (e) => {
