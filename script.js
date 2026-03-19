@@ -215,41 +215,80 @@ document.addEventListener('DOMContentLoaded', () => {
         const monthYearEl = document.getElementById('calendar-month-year');
         if (monthYearEl) monthYearEl.innerText = "Weekly Schedule: March 16 - 22, 2026";
         
-        // Weekly view: March 16 (Mon) to March 22 (Sun)
-        // We will show 1 week: Sun 15th to Sat 21st to match our grid headers
-        const weekStart = 15; 
+        const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        const weekStart = 15; // Sun 15th
         const todayDate = 16; 
         
         for(let i = 0; i < 7; i++) {
-            const day = weekStart + i;
+            const dayNum = weekStart + i;
+            const dayName = dayNames[i];
+            
             const cell = document.createElement('div');
-            cell.className = `cal-cell ${day === todayDate ? 'today' : ''}`;
+            cell.className = `cal-cell ${dayNum === todayDate ? 'today' : ''}`;
+            
+            // Date Box (Left side)
+            const dateBox = document.createElement('div');
+            dateBox.className = 'cal-date-box';
+            
+            const dayLabel = document.createElement('div');
+            dayLabel.className = 'cal-day-name';
+            dayLabel.innerText = dayName.substring(0, 3);
             
             const dateNum = document.createElement('div');
             dateNum.className = 'cal-date';
-            dateNum.innerText = day;
-            cell.appendChild(dateNum);
-
-            // 0=Sun, 1=Mon, ..., 5=Fri, 6=Sat
-            const dayOfWeek = i; 
+            dateNum.innerText = dayNum;
             
-            if(dayOfWeek !== 0 && dayOfWeek !== 6) {
-                const officeList = document.createElement('div');
-                officeList.className = 'office-list';
+            dateBox.appendChild(dayLabel);
+            dateBox.appendChild(dateNum);
+            cell.appendChild(dateBox);
+
+            // Office List (Right side)
+            const officeList = document.createElement('div');
+            officeList.className = 'office-list';
+            
+            // 0=Sun, 6=Sat
+            if(i !== 0 && i !== 6) {
+                // Use actual staff members if available, otherwise fallback to random
+                let workersToDisplay = [];
+                if (staffMembers && staffMembers.length > 0) {
+                    // Randomly pick a few from actual staff
+                    const num = Math.min(staffMembers.length, Math.floor(Math.random() * 3) + 2);
+                    workersToDisplay = [...staffMembers].sort(() => 0.5 - Math.random()).slice(0, num);
+                } else {
+                    // Fallback to demo names
+                    const num = Math.floor(Math.random() * 3) + 2;
+                    workersToDisplay = getRandomWorkers(num).map(name => ({ email: name, location: Math.random() > 0.5 ? 'Lagos' : 'Ibadan' }));
+                }
                 
-                const numWorkers = Math.floor(Math.random() * 3) + 2;
-                const workers = getRandomWorkers(numWorkers);
-                
-                workers.forEach(w => {
-                    const wSpan = document.createElement('span');
-                    wSpan.className = 'worker-name';
-                    wSpan.innerText = w;
-                    officeList.appendChild(wSpan);
+                workersToDisplay.forEach(staff => {
+                    const badge = document.createElement('div');
+                    badge.className = 'worker-badge';
+                    
+                    const nameSpan = document.createElement('span');
+                    nameSpan.className = 'worker-name';
+                    // Just show the part before @ for email or full name if it's already a name
+                    const displayName = staff.email.includes('@') ? staff.email.split('@')[0] : staff.email;
+                    nameSpan.innerText = displayName;
+                    
+                    const locSpan = document.createElement('span');
+                    locSpan.className = `worker-location ${staff.location.toLowerCase()}`;
+                    locSpan.innerText = staff.location;
+                    
+                    badge.appendChild(nameSpan);
+                    badge.appendChild(locSpan);
+                    officeList.appendChild(badge);
                 });
-                
-                cell.appendChild(officeList);
+            } else {
+                const weekendMsg = document.createElement('span');
+                weekendMsg.className = 'weekend-msg';
+                weekendMsg.innerText = "Weekend - No Office Coverage Required";
+                weekendMsg.style.color = "var(--text-secondary)";
+                weekendMsg.style.fontSize = "0.9rem";
+                weekendMsg.style.fontStyle = "italic";
+                officeList.appendChild(weekendMsg);
             }
 
+            cell.appendChild(officeList);
             calendarDays.appendChild(cell);
         }
     }
