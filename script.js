@@ -276,10 +276,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Staff Management Logic ---
     const startAdminBtn = document.getElementById('start-admin-btn');
     const managerLoginModal = document.getElementById('manager-login-modal');
+    const managerMenuModal = document.getElementById('manager-menu-modal');
     const staffManagementModal = document.getElementById('staff-management-modal');
     
     const closeLoginBtn = document.getElementById('close-login-btn');
+    const closeMenuBtn = document.getElementById('close-menu-btn');
     const closeStaffBtn = document.getElementById('close-staff-btn');
+
+    const menuCreateBtn = document.getElementById('menu-create-btn');
+    const menuAddStaffBtn = document.getElementById('menu-add-staff-btn');
+    const menuViewSchedBtn = document.getElementById('menu-view-sched-btn');
     
     const secretInput = document.getElementById('secret-phrase-input');
     const loginSubmitBtn = document.getElementById('login-submit-btn');
@@ -316,11 +322,27 @@ document.addEventListener('DOMContentLoaded', () => {
     loginSubmitBtn.addEventListener('click', () => {
         if (secretInput.value === "Iamthemanager") {
             managerLoginModal.classList.add('hidden-state');
-            staffManagementModal.classList.remove('hidden-state');
-            loadStaff();
+            managerMenuModal.classList.remove('hidden-state');
         } else {
             loginError.classList.remove('hidden-state');
         }
+    });
+
+    // Menu Actions
+    menuAddStaffBtn.addEventListener('click', () => {
+        managerMenuModal.classList.add('hidden-state');
+        staffManagementModal.classList.remove('hidden-state');
+        loadStaff();
+    });
+
+    menuViewSchedBtn.addEventListener('click', () => {
+        managerMenuModal.classList.add('hidden-state');
+        calendarModal.classList.remove('hidden-state');
+        generateCalendar();
+    });
+
+    menuCreateBtn.addEventListener('click', () => {
+        alert("Creating new schedule... Done!");
     });
 
     // Submit on Enter
@@ -330,6 +352,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Close Modals
     closeLoginBtn.addEventListener('click', () => managerLoginModal.classList.add('hidden-state'));
+    closeMenuBtn.addEventListener('click', () => managerMenuModal.classList.add('hidden-state'));
     closeStaffBtn.addEventListener('click', () => staffManagementModal.classList.add('hidden-state'));
 
     // Handle Add Staff
@@ -404,7 +427,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Modal overlay closes
-    [managerLoginModal, staffManagementModal].forEach(modal => {
+    [managerLoginModal, managerMenuModal, staffManagementModal].forEach(modal => {
         modal.addEventListener('click', (e) => {
             if (e.target === modal) {
                 modal.classList.add('hidden-state');
