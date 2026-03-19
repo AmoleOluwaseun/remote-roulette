@@ -290,6 +290,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const addStaffBtn = document.getElementById('add-staff-btn');
     const staffEmailListEl = document.getElementById('staff-email-list');
     const staffAddSuccess = document.getElementById('staff-add-success');
+    const staffEmailError = document.getElementById('staff-email-error');
 
     let staffMembers = [];
 
@@ -335,6 +336,11 @@ document.addEventListener('DOMContentLoaded', () => {
     addStaffBtn.addEventListener('click', async () => {
         const email = staffEmailInput.value.trim();
         const location = staffLocationInput.value;
+        
+        // Hide previous messages
+        staffEmailError.classList.add('hidden-state');
+        staffAddSuccess.classList.add('hidden-state');
+
         if (email && email.includes('@')) {
             try {
                 const res = await fetch('/api/staff', {
@@ -354,6 +360,9 @@ document.addEventListener('DOMContentLoaded', () => {
             } catch (err) {
                 console.error("Failed to add staff:", err);
             }
+        } else {
+            // Show validation error
+            staffEmailError.classList.remove('hidden-state');
         }
     });
 
