@@ -189,6 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     viewCalendarBtn.addEventListener('click', () => {
         calendarModal.classList.remove('hidden-state');
+        backToMenuFromSched.classList.add('hidden-state'); // Hide back button if accessed from main page
         generateCalendar();
     });
 
@@ -303,6 +304,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeMenuBtn = document.getElementById('close-menu-btn');
     const closeStaffBtn = document.getElementById('close-staff-btn');
 
+    const backToMenuFromStaff = document.getElementById('back-to-menu-from-staff');
+    const backToMenuFromSched = document.getElementById('back-to-menu-from-sched');
+
     const menuCreateBtn = document.getElementById('menu-create-btn');
     const menuAddStaffBtn = document.getElementById('menu-add-staff-btn');
     const menuViewSchedBtn = document.getElementById('menu-view-sched-btn');
@@ -358,7 +362,19 @@ document.addEventListener('DOMContentLoaded', () => {
     menuViewSchedBtn.addEventListener('click', () => {
         managerMenuModal.classList.add('hidden-state');
         calendarModal.classList.remove('hidden-state');
+        backToMenuFromSched.classList.remove('hidden-state'); // Show back button here
         generateCalendar();
+    });
+
+    // Back Buttons
+    backToMenuFromStaff.addEventListener('click', () => {
+        staffManagementModal.classList.add('hidden-state');
+        managerMenuModal.classList.remove('hidden-state');
+    });
+
+    backToMenuFromSched.addEventListener('click', () => {
+        calendarModal.classList.add('hidden-state');
+        managerMenuModal.classList.remove('hidden-state');
     });
 
     menuCreateBtn.addEventListener('click', () => {

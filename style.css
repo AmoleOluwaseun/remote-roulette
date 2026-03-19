@@ -690,6 +690,24 @@ body {
     color: var(--danger-red);
 }
 
+.back-link {
+    background: none;
+    border: none;
+    color: var(--brand-blue);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+    margin-bottom: 0.5rem;
+    display: block;
+    transition: transform 0.2s ease;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+    transform: translateX(-3px);
+}
+
 .calendar-wrapper {
     padding: 2rem;
 }
