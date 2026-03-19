@@ -1,1 +1,10 @@
-["manager@workspace.com", "lead@workspace.com"]
+[
+  {
+    "email": "manager@workspace.com",
+    "location": "Lagos"
+  },
+  {
+    "email": "lead@workspace.com",
+    "location": "Ibadan"
+  }
+]

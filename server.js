@@ -23,24 +23,24 @@ app.get('/api/staff', (req, res) => {
 
 // ADD staff email
 app.post('/api/staff', (req, res) => {
-    const { email } = req.body;
-    if (!email) return res.status(400).json({ error: 'Email required' });
+    const { email, location } = req.body;
+    if (!email || !location) return res.status(400).json({ error: 'Email and location required' });
     
-    let emails = JSON.parse(fs.readFileSync(DATA_FILE));
-    if (!emails.includes(email)) {
-        emails.push(email);
-        fs.writeFileSync(DATA_FILE, JSON.stringify(emails, null, 2));
+    let staff = JSON.parse(fs.readFileSync(DATA_FILE));
+    if (!staff.find(s => s.email === email)) {
+        staff.push({ email, location });
+        fs.writeFileSync(DATA_FILE, JSON.stringify(staff, null, 2));
     }
-    res.json(emails);
+    res.json(staff);
 });
 
 // DELETE staff email
 app.delete('/api/staff', (req, res) => {
     const { email } = req.body;
-    let emails = JSON.parse(fs.readFileSync(DATA_FILE));
-    emails = emails.filter(e => e !== email);
-    fs.writeFileSync(DATA_FILE, JSON.stringify(emails, null, 2));
-    res.json(emails);
+    let staff = JSON.parse(fs.readFileSync(DATA_FILE));
+    staff = staff.filter(s => s.email !== email);
+    fs.writeFileSync(DATA_FILE, JSON.stringify(staff, null, 2));
+    res.json(staff);
 });
 
 app.listen(PORT, () => {
