@@ -5,42 +5,52 @@ const bodyParser = require('body-parser');
 
 const app = express();
 const PORT = 3000;
-const DATA_FILE = path.join(__dirname, 'staff.json');
+const STAFF_FILE = path.join(__dirname, 'staff.json');
+const SCHEDULE_FILE = path.join(__dirname, 'schedule.json');
 
 app.use(express.static(__dirname));
 app.use(bodyParser.json());
 
-// Initialize data file if it doesn't exist
-if (!fs.existsSync(DATA_FILE)) {
-    fs.writeFileSync(DATA_FILE, JSON.stringify(["manager@workspace.com", "lead@workspace.com"]));
+// Ensure files exist
+if (!fs.existsSync(STAFF_FILE)) {
+    fs.writeFileSync(STAFF_FILE, JSON.stringify([]));
+}
+if (!fs.existsSync(SCHEDULE_FILE)) {
+    fs.writeFileSync(SCHEDULE_FILE, JSON.stringify({}));
 }
 
-// GET staff emails
+// API Endpoints
 app.get('/api/staff', (req, res) => {
-    const data = JSON.parse(fs.readFileSync(DATA_FILE));
+    const data = JSON.parse(fs.readFileSync(STAFF_FILE, 'utf8'));
     res.json(data);
 });
 
-// ADD staff email
 app.post('/api/staff', (req, res) => {
     const { email, location } = req.body;
-    if (!email || !location) return res.status(400).json({ error: 'Email and location required' });
-    
-    let staff = JSON.parse(fs.readFileSync(DATA_FILE));
-    if (!staff.find(s => s.email === email)) {
-        staff.push({ email, location });
-        fs.writeFileSync(DATA_FILE, JSON.stringify(staff, null, 2));
-    }
-    res.json(staff);
+    const data = JSON.parse(fs.readFileSync(STAFF_FILE, 'utf8'));
+    data.push({ email, location });
+    fs.writeFileSync(STAFF_FILE, JSON.stringify(data, null, 2));
+    res.json(data);
 });
 
-// DELETE staff email
 app.delete('/api/staff', (req, res) => {
     const { email } = req.body;
-    let staff = JSON.parse(fs.readFileSync(DATA_FILE));
-    staff = staff.filter(s => s.email !== email);
-    fs.writeFileSync(DATA_FILE, JSON.stringify(staff, null, 2));
-    res.json(staff);
+    let data = JSON.parse(fs.readFileSync(STAFF_FILE, 'utf8'));
+    data = data.filter(s => s.email !== email);
+    fs.writeFileSync(STAFF_FILE, JSON.stringify(data, null, 2));
+    res.json(data);
+});
+
+// Schedule API
+app.get('/api/schedule', (req, res) => {
+    const data = JSON.parse(fs.readFileSync(SCHEDULE_FILE, 'utf8'));
+    res.json(data);
+});
+
+app.post('/api/schedule', (req, res) => {
+    const schedule = req.body;
+    fs.writeFileSync(SCHEDULE_FILE, JSON.stringify(schedule, null, 2));
+    res.json({ success: true });
 });
 
 app.listen(PORT, () => {
