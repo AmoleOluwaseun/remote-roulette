@@ -212,22 +212,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function generateCalendar() {
         calendarDays.innerHTML = '';
+        const monthYearEl = document.getElementById('calendar-month-year');
+        if (monthYearEl) monthYearEl.innerText = "Weekly Schedule: March 16 - 22, 2026";
         
-        // Let's hardcode to March 2026 for demonstration
-        // March 2026 starts on a Sunday (0) and has 31 days
-        const startDayIndex = 0; 
-        const totalDays = 31;
-        const todayDate = 16; // March 16th, 2026 to match context
+        // Weekly view: March 16 (Mon) to March 22 (Sun)
+        // We will show 1 week: Sun 15th to Sat 21st to match our grid headers
+        const weekStart = 15; 
+        const todayDate = 16; 
         
-        // Add empty cells for padding start of month
-        for(let i = 0; i < startDayIndex; i++) {
-            const emptyCell = document.createElement('div');
-            emptyCell.className = 'cal-cell empty';
-            calendarDays.appendChild(emptyCell);
-        }
-
-        // Add days
-        for(let day = 1; day <= totalDays; day++) {
+        for(let i = 0; i < 7; i++) {
+            const day = weekStart + i;
             const cell = document.createElement('div');
             cell.className = `cal-cell ${day === todayDate ? 'today' : ''}`;
             
@@ -236,15 +230,13 @@ document.addEventListener('DOMContentLoaded', () => {
             dateNum.innerText = day;
             cell.appendChild(dateNum);
 
-            // Determine day of week (0 = Sun, 6 = Sat)
-            const dayOfWeek = (startDayIndex + day - 1) % 7;
+            // 0=Sun, 1=Mon, ..., 5=Fri, 6=Sat
+            const dayOfWeek = i; 
             
-            // Only add workers on weekdays
             if(dayOfWeek !== 0 && dayOfWeek !== 6) {
                 const officeList = document.createElement('div');
                 officeList.className = 'office-list';
                 
-                // Randomly add 2-4 workers to office
                 const numWorkers = Math.floor(Math.random() * 3) + 2;
                 const workers = getRandomWorkers(numWorkers);
                 
@@ -259,17 +251,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             calendarDays.appendChild(cell);
-        }
-        
-        // Add empty cells for grid padding at end
-        const totalCells = startDayIndex + totalDays;
-        const remainder = totalCells % 7;
-        if(remainder !== 0) {
-            for(let i = 0; i < (7 - remainder); i++) {
-                const emptyCell = document.createElement('div');
-                emptyCell.className = 'cal-cell empty';
-                calendarDays.appendChild(emptyCell);
-            }
         }
     }
 

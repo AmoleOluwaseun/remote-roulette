@@ -707,23 +707,7 @@ body {
 }
 
 .cal-nav-btn {
-    background: white;
-    border: 1px solid var(--border-color);
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600;
-    transition: all 0.2s;
-}
-
-.cal-nav-btn:hover {
-    background: var(--brand-light);
-    color: var(--brand-blue);
-    border-color: #bfdbfe;
+    display: none; /* Hide navigation for fixed weekly view */
 }
 
 /* CSS Grid Calendar */
