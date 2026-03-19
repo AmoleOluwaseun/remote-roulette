@@ -918,6 +918,13 @@ body {
     margin-top: 0.5rem;
 }
 
+.success-text {
+    color: var(--success-green);
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+    font-weight: 500;
+}
+
 .staff-list-container {
     margin-top: 2rem;
 }

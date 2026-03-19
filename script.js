@@ -289,6 +289,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const staffLocationInput = document.getElementById('staff-location-input');
     const addStaffBtn = document.getElementById('add-staff-btn');
     const staffEmailListEl = document.getElementById('staff-email-list');
+    const staffAddSuccess = document.getElementById('staff-add-success');
 
     let staffMembers = [];
 
@@ -344,6 +345,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 staffMembers = await res.json();
                 staffEmailInput.value = '';
                 renderStaffList();
+                
+                // Show success feedback
+                staffAddSuccess.classList.remove('hidden-state');
+                setTimeout(() => {
+                    staffAddSuccess.classList.add('hidden-state');
+                }, 3000);
             } catch (err) {
                 console.error("Failed to add staff:", err);
             }
