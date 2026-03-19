@@ -286,16 +286,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const loginError = document.getElementById('login-error');
     
     const staffEmailInput = document.getElementById('staff-email-input');
+    const staffLocationInput = document.getElementById('staff-location-input');
     const addStaffBtn = document.getElementById('add-staff-btn');
     const staffEmailListEl = document.getElementById('staff-email-list');
 
-    let staffEmails = [];
+    let staffMembers = [];
 
     // Load initial staff
     async function loadStaff() {
         try {
             const res = await fetch('/api/staff');
-            staffEmails = await res.json();
+            staffMembers = await res.json();
             renderStaffList();
         } catch (err) {
             console.error("Failed to load staff:", err);
@@ -332,14 +333,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // Handle Add Staff
     addStaffBtn.addEventListener('click', async () => {
         const email = staffEmailInput.value.trim();
+        const location = staffLocationInput.value;
         if (email && email.includes('@')) {
             try {
                 const res = await fetch('/api/staff', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email })
+                    body: JSON.stringify({ email, location })
                 });
-                staffEmails = await res.json();
+                staffMembers = await res.json();
                 staffEmailInput.value = '';
                 renderStaffList();
             } catch (err) {
@@ -354,11 +356,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderStaffList() {
         staffEmailListEl.innerHTML = '';
-        staffEmails.forEach((email) => {
+        staffMembers.forEach((member) => {
             const li = document.createElement('li');
             li.innerHTML = `
-                <span>${email}</span>
-                <button class="remove-staff-btn" data-email="${email}">Remove</button>
+                <div class="staff-info">
+                    <span class="staff-email">${member.email}</span>
+                    <span class="location-badge ${member.location.toLowerCase()}">${member.location}</span>
+                </div>
+                <button class="remove-staff-btn" data-email="${member.email}">Remove</button>
             `;
             staffEmailListEl.appendChild(li);
         });
@@ -373,7 +378,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ email })
                     });
-                    staffEmails = await res.json();
+                    staffMembers = await res.json();
                     renderStaffList();
                 } catch (err) {
                     console.error("Failed to remove staff:", err);
