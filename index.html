@@ -253,6 +253,52 @@
         </div>
     </div>
 
+    <!-- Create Schedule Modal -->
+    <div id="create-schedule-modal" class="modal-overlay hidden-state">
+        <div class="modal-content small-modal">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <button id="back-to-menu-from-create" class="back-link">← Back to Dashboard</button>
+                    <h2>Create Schedule</h2>
+                    <p>Step 1: Select public holidays for this week.</p>
+                </div>
+                <button id="close-create-btn" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="holiday-selection">
+                    <p class="section-hint">Excluded days will have no onsite/offsite assignments.</p>
+                    <div class="day-check-list">
+                        <label class="day-check-item">
+                            <input type="checkbox" class="holiday-checkbox" value="16">
+                            <span class="day-name">Monday (16th)</span>
+                        </label>
+                        <label class="day-check-item">
+                            <input type="checkbox" class="holiday-checkbox" value="17">
+                            <span class="day-name">Tuesday (17th)</span>
+                        </label>
+                        <label class="day-check-item">
+                            <input type="checkbox" class="holiday-checkbox" value="18">
+                            <span class="day-name">Wednesday (18th)</span>
+                        </label>
+                        <label class="day-check-item">
+                            <input type="checkbox" class="holiday-checkbox" value="19">
+                            <span class="day-name">Thursday (19th)</span>
+                        </label>
+                        <label class="day-check-item">
+                            <input type="checkbox" class="holiday-checkbox" value="20">
+                            <span class="day-name">Friday (20th)</span>
+                        </label>
+                    </div>
+                    
+                    <div class="action-footer">
+                        <button id="proceed-to-alg-btn" class="primary-btn">Next: Generate Schedule</button>
+                        <p class="footer-note">If there are no holidays, leave all unchecked and proceed.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Staff Management Modal -->
     <div id="staff-management-modal" class="modal-overlay hidden-state">
         <div class="modal-content">

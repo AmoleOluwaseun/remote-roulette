@@ -931,6 +931,67 @@ body {
     color: var(--text-secondary);
 }
 
+.holiday-selection {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.section-hint {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+.day-check-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.day-check-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--bg-page);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.day-check-item:hover {
+    background: var(--brand-light);
+    border-color: #bfdbfe;
+}
+
+.day-check-item input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--brand-blue);
+    cursor: pointer;
+}
+
+.day-name {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.action-footer {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.footer-note {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-align: center;
+}
+
 .modal-body {
     padding: 2rem;
 }

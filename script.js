@@ -299,13 +299,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const managerLoginModal = document.getElementById('manager-login-modal');
     const managerMenuModal = document.getElementById('manager-menu-modal');
     const staffManagementModal = document.getElementById('staff-management-modal');
+    const createScheduleModal = document.getElementById('create-schedule-modal');
     
     const closeLoginBtn = document.getElementById('close-login-btn');
     const closeMenuBtn = document.getElementById('close-menu-btn');
     const closeStaffBtn = document.getElementById('close-staff-btn');
+    const closeCreateBtn = document.getElementById('close-create-btn');
 
     const backToMenuFromStaff = document.getElementById('back-to-menu-from-staff');
     const backToMenuFromSched = document.getElementById('back-to-menu-from-sched');
+    const backToMenuFromCreate = document.getElementById('back-to-menu-from-create');
 
     const menuCreateBtn = document.getElementById('menu-create-btn');
     const menuAddStaffBtn = document.getElementById('menu-add-staff-btn');
@@ -366,6 +369,11 @@ document.addEventListener('DOMContentLoaded', () => {
         generateCalendar();
     });
 
+    menuCreateBtn.addEventListener('click', () => {
+        managerMenuModal.classList.add('hidden-state');
+        createScheduleModal.classList.remove('hidden-state');
+    });
+
     // Back Buttons
     backToMenuFromStaff.addEventListener('click', () => {
         staffManagementModal.classList.add('hidden-state');
@@ -377,8 +385,25 @@ document.addEventListener('DOMContentLoaded', () => {
         managerMenuModal.classList.remove('hidden-state');
     });
 
-    menuCreateBtn.addEventListener('click', () => {
-        alert("Creating new schedule... Done!");
+    backToMenuFromCreate.addEventListener('click', () => {
+        createScheduleModal.classList.add('hidden-state');
+        managerMenuModal.classList.remove('hidden-state');
+    });
+
+    // Handle Holiday Selection & Proceed
+    const proceedToAlgBtn = document.getElementById('proceed-to-alg-btn');
+    let selectedHolidays = [];
+
+    proceedToAlgBtn.addEventListener('click', () => {
+        selectedHolidays = Array.from(document.querySelectorAll('.holiday-checkbox:checked')).map(cb => parseInt(cb.value));
+        console.log("Holidays selected:", selectedHolidays);
+        
+        // Final generation logic will go here
+        alert(`Generating schedule... Excluding days: ${selectedHolidays.length > 0 ? selectedHolidays.join(', ') : 'None'}`);
+        
+        // For now, just close and go back to menu
+        createScheduleModal.classList.add('hidden-state');
+        managerMenuModal.classList.remove('hidden-state');
     });
 
     // Submit on Enter
@@ -390,6 +415,7 @@ document.addEventListener('DOMContentLoaded', () => {
     closeLoginBtn.addEventListener('click', () => managerLoginModal.classList.add('hidden-state'));
     closeMenuBtn.addEventListener('click', () => managerMenuModal.classList.add('hidden-state'));
     closeStaffBtn.addEventListener('click', () => staffManagementModal.classList.add('hidden-state'));
+    closeCreateBtn.addEventListener('click', () => createScheduleModal.classList.add('hidden-state'));
 
     // Handle Add Staff
     addStaffBtn.addEventListener('click', async () => {
@@ -463,7 +489,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Modal overlay closes
-    [managerLoginModal, managerMenuModal, staffManagementModal].forEach(modal => {
+    [managerLoginModal, managerMenuModal, staffManagementModal, createScheduleModal].forEach(modal => {
         modal.addEventListener('click', (e) => {
             if (e.target === modal) {
                 modal.classList.add('hidden-state');
