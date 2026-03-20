@@ -377,10 +377,40 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // --- User Personalization ---
+    const userEmailModal = document.getElementById('user-email-modal');
+    const userEmailInput = document.getElementById('user-work-email-input');
+    const saveUserEmailBtn = document.getElementById('save-user-email-btn');
+
+    function checkUserEmail() {
+        const savedEmail = localStorage.getItem('userEmail');
+        if (!savedEmail) {
+            userEmailModal.classList.remove('hidden-state');
+        } else {
+            console.log("Welcome back:", savedEmail);
+        }
+    }
+
+    saveUserEmailBtn.addEventListener('click', () => {
+        const email = userEmailInput.value.trim();
+        if (email && email.includes('@')) {
+            localStorage.setItem('userEmail', email);
+            userEmailModal.classList.add('hidden-state');
+            console.log("Email saved:", email);
+        } else {
+            alert("Please enter a valid work email address.");
+        }
+    });
+
+    userEmailInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') saveUserEmailBtn.click();
+    });
+
     // Load initial staff and schedule
     async function loadData() {
         await loadStaff();
         await loadSchedule();
+        checkUserEmail(); // Check for user email after data is ready
     }
     loadData();
 

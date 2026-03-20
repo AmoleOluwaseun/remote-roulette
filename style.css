@@ -665,6 +665,10 @@ body {
     z-index: 10;
 }
 
+.modal-header.no-close {
+    padding-bottom: 1.5rem;
+}
+
 .modal-title h2 {
     font-size: 1.8rem;
     color: var(--text-primary);
@@ -992,8 +996,26 @@ body {
     text-align: center;
 }
 
-.modal-body {
-    padding: 2rem;
+.input-group {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.input-group input {
+    flex-grow: 1;
+    padding: 0.8rem 1.25rem;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    font-size: 1rem;
+    background: var(--bg-page);
+    transition: all 0.2s;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--brand-blue);
+    box-shadow: 0 0 0 4px var(--brand-light);
 }
 
 /* Processing Modal Styles */
