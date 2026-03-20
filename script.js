@@ -30,26 +30,56 @@ document.addEventListener('DOMContentLoaded', () => {
         dice.classList.add('spinning');
 
         // Spin for 2.5 seconds directly on the reveal card without showing processing card
+        const userEmail = localStorage.getItem('userEmail');
+        const today = 16; // Simulated 'today'
+        const todaySchedule = currentSchedule[today] || [];
+        const myAssignment = todaySchedule.find(s => s.email.toLowerCase() === (userEmail || "").toLowerCase());
+
+        // Animation
+        // Assuming dicePlaceholder and diceContainer are new elements for animation
+        // and remoteState/officeState are new elements to display the result.
+        // For now, I'll map them to existing elements or assume they will be defined.
+        // Using existing dice for spinning animation.
+        const dicePlaceholder = document.getElementById('dice-placeholder') || dice; // Placeholder for dice if it exists
+        const diceContainer = document.getElementById('dice-container') || dice; // Container for dice if it exists
+        const remoteState = remoteCard; // Map to existing remoteCard
+        const officeState = officeCard; // Map to existing officeCard
+
+        dicePlaceholder.classList.add('hidden-state');
+        diceContainer.classList.remove('hidden-state');
+        
+        // Determine state from schedule or fallback to random
+        let isRemote = Math.random() > 0.5;
+        if (myAssignment) {
+            isRemote = (myAssignment.status === 'Offsite');
+        } else {
+            console.log("User not found in today's schedule, using random fallback.");
+        }
+        
         setTimeout(() => {
-            hideAllCards();
-            dice.classList.remove('spinning');
-            
-            // Randomly decide (50% chance for demonstration)
-            const isRemote = Math.random() > 0.5;
+            hideAllCards(); // Hide all cards first, as per original logic
+            dice.classList.remove('spinning'); // Stop spinning the dice
+
+            diceContainer.classList.add('hidden-state');
+            revealBtn.classList.add('hidden-state'); // This hides the reveal button after decision
 
             if (isRemote) {
-                remoteCard.classList.remove('hidden-state');
-                remoteCard.classList.add('active-state');
-                resetCheckinForm();
+                remoteState.classList.remove('hidden-state');
+                remoteState.classList.add('active-state'); // Add active state
+                resetCheckinForm(); // Call resetCheckinForm for remote
             } else {
-                officeCard.classList.remove('hidden-state');
-                officeCard.classList.add('active-state');
+                officeState.classList.remove('hidden-state');
+                officeState.classList.add('active-state'); // Add active state
             }
 
-            setTimeout(() => {
-                revealBtn.innerText = "Reveal Today's Status";
-                revealBtn.disabled = false;
-            }, 500);
+            // The original code had a timeout to reset the button text and state.
+            // The new code hides the button, so this part might need adjustment based on desired UX.
+            // For now, I'll keep the button hidden as per the provided change.
+            // If the button needs to reappear, it would need to be unhidden here.
+            // setTimeout(() => {
+            //     revealBtn.innerText = "Reveal Today's Status";
+            //     revealBtn.disabled = false;
+            // }, 500);
 
         }, 2000); 
     });
