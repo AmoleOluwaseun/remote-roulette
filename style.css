@@ -652,6 +652,10 @@ body {
     flex-direction: column;
 }
 
+.modal-content.small-modal {
+    max-width: 500px;
+}
+
 .modal-header {
     padding: 2rem;
     border-bottom: 1px solid var(--border-color);
@@ -809,6 +813,22 @@ body {
     align-items: center;
     gap: 0.5rem;
     box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+}
+
+.worker-badge.highlight-me {
+    background: linear-gradient(135deg, var(--brand-blue) 0%, #1d4ed8 100%);
+    color: white;
+    border-color: var(--brand-blue);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.worker-badge.highlight-me .worker-name {
+    color: white;
+}
+
+.worker-badge.highlight-me .worker-location {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
 }
 
 .worker-name {
@@ -990,16 +1010,22 @@ body {
     gap: 0.75rem;
 }
 
+.modal-body {
+    padding: 2.5rem 2rem;
+}
+
 .footer-note {
     font-size: 0.8rem;
     color: var(--text-secondary);
     text-align: center;
+    margin-top: 1rem;
 }
 
 .input-group {
     display: flex;
-    gap: 0.75rem;
-    margin-bottom: 1rem;
+    gap: 1rem;
+    margin: 1.5rem 0;
+    flex-wrap: wrap;
 }
 
 .input-group input {
@@ -1215,5 +1241,14 @@ body {
 
     .voting-section {
         grid-template-columns: 1fr;
+    }
+
+    .input-group, .add-staff-form {
+        flex-direction: column;
+    }
+
+    .input-group input, .add-staff-form input, .staff-select, .primary-btn {
+        width: 100%;
+        flex: none;
     }
 }

@@ -276,6 +276,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     displayList = getRandomWorkers(num).map(name => ({ email: name, location: Math.random() > 0.5 ? 'Lagos' : 'Ibadan' }));
                 }
 
+                const userEmail = localStorage.getItem('userEmail');
+
                 if (displayList.length === 0 && scheduledStaff.some(s => s.status === 'Holiday')) {
                     const holidayMsg = document.createElement('span');
                     holidayMsg.className = 'holiday-msg';
@@ -286,12 +288,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     displayList.forEach(staff => {
                         const badge = document.createElement('div');
-                        badge.className = 'worker-badge';
+                        const isMe = userEmail && staff.email.toLowerCase() === userEmail.toLowerCase();
+                        badge.className = `worker-badge ${isMe ? 'highlight-me' : ''}`;
                         
                         const nameSpan = document.createElement('span');
                         nameSpan.className = 'worker-name';
                         const displayName = staff.email.includes('@') ? staff.email.split('@')[0] : staff.email;
-                        nameSpan.innerText = displayName;
+                        nameSpan.innerText = isMe ? `${displayName} (You)` : displayName;
                         
                         const locSpan = document.createElement('span');
                         locSpan.className = `worker-location ${staff.location.toLowerCase()}`;
