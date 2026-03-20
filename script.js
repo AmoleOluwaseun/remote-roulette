@@ -49,38 +49,49 @@ document.addEventListener('DOMContentLoaded', () => {
         diceContainer.classList.remove('hidden-state');
         
         // Determine state from schedule or fallback to random
-        let isRemote = Math.random() > 0.5;
+        let state = 'random';
         if (myAssignment) {
-            isRemote = (myAssignment.status === 'Offsite');
+            state = myAssignment.status; // 'Onsite', 'Offsite', or 'Holiday'
         } else {
             console.log("User not found in today's schedule, using random fallback.");
         }
         
         setTimeout(() => {
-            hideAllCards(); // Hide all cards first, as per original logic
-            dice.classList.remove('spinning'); // Stop spinning the dice
+            hideAllCards(); // Hide all cards first
+            dice.classList.remove('spinning');
 
-            diceContainer.classList.add('hidden-state');
-            revealBtn.classList.add('hidden-state'); // This hides the reveal button after decision
-
-            if (isRemote) {
-                remoteState.classList.remove('hidden-state');
-                remoteState.classList.add('active-state'); // Add active state
-                resetCheckinForm(); // Call resetCheckinForm for remote
+            if (state === 'Holiday') {
+                const holidayCard = document.getElementById('holiday-card');
+                const holidayMsg = document.getElementById('holiday-message');
+                const messages = [
+                    "Lucky you! Enjoy your celebration or have lots of rest today, don't you dare think about working today....",
+                    "It's a public holiday! Time to unplug, unwind, and absolutely ignore your inbox. 🥳",
+                    "The office is closed! Go outside, breath some fresh air, and forget your password for 24 hours.",
+                    "Hooray! A well-deserved break. The only 'standup' you should do today is getting out of bed for snacks.",
+                    "Enjoy the festivities! Working today is officially forbidden by the Remote Roulette laws. 🚫💻"
+                ];
+                holidayMsg.innerText = messages[Math.floor(Math.random() * messages.length)];
+                holidayCard.classList.remove('hidden-state');
+                holidayCard.classList.add('active-state');
+            } else if (state === 'Offsite') {
+                remoteCard.classList.remove('hidden-state');
+                remoteCard.classList.add('active-state');
+                resetCheckinForm();
+            } else if (state === 'Onsite') {
+                officeCard.classList.remove('hidden-state');
+                officeCard.classList.add('active-state');
             } else {
-                officeState.classList.remove('hidden-state');
-                officeState.classList.add('active-state'); // Add active state
+                // Random fallback logic
+                const isRemote = Math.random() > 0.5;
+                if (isRemote) {
+                    remoteCard.classList.remove('hidden-state');
+                    remoteCard.classList.add('active-state');
+                    resetCheckinForm();
+                } else {
+                    officeCard.classList.remove('hidden-state');
+                    officeCard.classList.add('active-state');
+                }
             }
-
-            // The original code had a timeout to reset the button text and state.
-            // The new code hides the button, so this part might need adjustment based on desired UX.
-            // For now, I'll keep the button hidden as per the provided change.
-            // If the button needs to reappear, it would need to be unhidden here.
-            // setTimeout(() => {
-            //     revealBtn.innerText = "Reveal Today's Status";
-            //     revealBtn.disabled = false;
-            // }, 500);
-
         }, 2000); 
     });
 
