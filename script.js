@@ -357,6 +357,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let staffMembers = [];
 
+    // Load data functions
+    async function loadStaff() {
+        try {
+            const res = await fetch('/api/staff');
+            staffMembers = await res.json();
+            renderStaffList();
+        } catch (err) {
+            console.error("Failed to load staff:", err);
+        }
+    }
+
+    async function loadSchedule() {
+        try {
+            const res = await fetch('/api/schedule');
+            currentSchedule = await res.json();
+        } catch (err) {
+            console.error("Failed to load schedule:", err);
+        }
+    }
+
     // Load initial staff and schedule
     async function loadData() {
         await loadStaff();
