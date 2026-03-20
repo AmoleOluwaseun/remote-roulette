@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Spin for 2.5 seconds directly on the reveal card without showing processing card
         const userEmail = localStorage.getItem('userEmail');
-        const today = 16; // Simulated 'today'
+        const today = new Date().getDate(); // Dynamic system date
         const todaySchedule = currentSchedule[today] || [];
         const myAssignment = todaySchedule.find(s => s.email.toLowerCase() === (userEmail || "").toLowerCase());
 
@@ -260,7 +260,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
         const weekStart = 15; // Sun 15th
-        const todayDate = 16; 
+        const todayDate = new Date().getDate(); // Dynamic system date
         
         for(let i = 0; i < 7; i++) {
             const dayNum = weekStart + i;
