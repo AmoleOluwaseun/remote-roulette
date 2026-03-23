@@ -64,8 +64,15 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Determine state from schedule or fallback to random
         let state = 'random';
+        
+        // Check if schedule for the week is empty
+        const isScheduleEmpty = Object.keys(currentSchedule).filter(key => key !== '_weekStart').length === 0;
+
         if (myAssignment) {
             state = myAssignment.status; // 'Onsite', 'Offsite', or 'Holiday'
+        } else if (isScheduleEmpty) {
+            state = 'NoSchedule';
+            console.log("Weekly schedule is not yet generated.");
         } else {
             console.log("User not found in today's schedule, using random fallback.");
         }
@@ -91,7 +98,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 remoteCard.classList.remove('hidden-state');
                 remoteCard.classList.add('active-state');
                 resetCheckinForm();
-            } else if (state === 'Onsite') {
+            } else if (state === 'Onsite' || state === 'NoSchedule') {
+                const title = officeCard.querySelector('.result-title');
+                const desc = officeCard.querySelector('.result-desc');
+                
+                if (state === 'NoSchedule') {
+                    title.innerText = "Schedule Pending";
+                    desc.innerText = "The weekly schedule has not yet been generated. Please work from the office physically today, it's the same for everyone else until the manager creates the new schedule.";
+                } else {
+                    title.innerText = "See You at the Office!";
+                    desc.innerText = "Head in and collaborate with the team today.";
+                }
+                
                 officeCard.classList.remove('hidden-state');
                 officeCard.classList.add('active-state');
             } else {
