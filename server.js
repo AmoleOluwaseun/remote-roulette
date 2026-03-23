@@ -7,6 +7,7 @@ const app = express();
 const PORT = 3000;
 const STAFF_FILE = path.join(__dirname, 'staff.json');
 const SCHEDULE_FILE = path.join(__dirname, 'schedule.json');
+const CHECKIN_FILE = path.join(__dirname, 'checkins.json');
 
 app.use(express.static(__dirname));
 app.use(bodyParser.json());
@@ -17,6 +18,9 @@ if (!fs.existsSync(STAFF_FILE)) {
 }
 if (!fs.existsSync(SCHEDULE_FILE)) {
     fs.writeFileSync(SCHEDULE_FILE, JSON.stringify({}));
+}
+if (!fs.existsSync(CHECKIN_FILE)) {
+    fs.writeFileSync(CHECKIN_FILE, JSON.stringify([]));
 }
 
 // API Endpoints
@@ -50,6 +54,15 @@ app.get('/api/schedule', (req, res) => {
 app.post('/api/schedule', (req, res) => {
     const schedule = req.body;
     fs.writeFileSync(SCHEDULE_FILE, JSON.stringify(schedule, null, 2));
+    res.json({ success: true });
+});
+
+// Check-in API
+app.post('/api/checkin', (req, res) => {
+    const { email, time } = req.body;
+    const data = JSON.parse(fs.readFileSync(CHECKIN_FILE, 'utf8'));
+    data.push({ email, time });
+    fs.writeFileSync(CHECKIN_FILE, JSON.stringify(data, null, 2));
     res.json({ success: true });
 });
 

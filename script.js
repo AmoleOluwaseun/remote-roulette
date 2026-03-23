@@ -155,21 +155,52 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Check-in Radio ---
     const checkinRadio = document.getElementById('checkin-radio');
     const checkinStatusText = document.getElementById('checkin-status-text');
+    const officeCheckinRadio = document.getElementById('office-checkin-radio');
+    const officeCheckinStatusText = document.getElementById('office-checkin-status-text');
 
-    checkinRadio.addEventListener('change', (e) => {
-        if (e.target.checked) {
-            checkinStatusText.innerText = "Morning check-in confirmed.";
-            checkinStatusText.style.color = "var(--success-green)";
-            checkinStatusText.style.fontWeight = "500";
+    async function handleCheckin(radio, statusText, location) {
+        if (radio.checked) {
+            const userEmail = localStorage.getItem('userEmail');
+            const time = new Date().toLocaleString();
+            
+            statusText.innerText = "Check-in confirmed.";
+            statusText.style.color = "var(--success-green)";
+            statusText.style.fontWeight = "500";
+
+            try {
+                await fetch('/api/checkin', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: userEmail, time: time, location: location })
+                });
+                console.log(`Check-in recorded for ${userEmail} at ${time}`);
+            } catch (err) {
+                console.error("Failed to record check-in:", err);
+            }
         }
-    });
+    }
+
+    checkinRadio.addEventListener('change', () => handleCheckin(checkinRadio, checkinStatusText, 'Remote'));
+    if (officeCheckinRadio) {
+        officeCheckinRadio.addEventListener('change', () => handleCheckin(officeCheckinRadio, officeCheckinStatusText, 'Office'));
+    }
 
     function resetCheckinForm() {
-        // Reset radio
-        checkinRadio.checked = false;
-        checkinStatusText.innerText = "Confirm you are at your desk.";
-        checkinStatusText.style.color = "";
-        checkinStatusText.style.fontWeight = "normal";
+        // Reset remote radio
+        if (checkinRadio) {
+            checkinRadio.checked = false;
+            checkinStatusText.innerText = "Confirm you are at your desk.";
+            checkinStatusText.style.color = "";
+            checkinStatusText.style.fontWeight = "normal";
+        }
+
+        // Reset office radio
+        if (officeCheckinRadio) {
+            officeCheckinRadio.checked = false;
+            officeCheckinStatusText.innerText = "Confirm you are at the office.";
+            officeCheckinStatusText.style.color = "";
+            officeCheckinStatusText.style.fontWeight = "normal";
+        }
     }
 
     // --- Calendar Modal Logic ---
