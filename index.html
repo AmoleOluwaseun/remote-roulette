@@ -69,38 +69,18 @@
                 <div id="remote-card" class="card result-card hidden-state">
                     <div class="status-badge remote-badge">Remote Day</div>
                     <h2 class="result-title">Working from Home!</h2>
-                    <p class="result-desc">Enjoy your remote day. Please complete your check-in and join the daily standup.</p>
+                    <p class="result-desc">Enjoy your remote day. Please complete your morning check-in.</p>
                     
                     <div class="action-list">
                         <div class="action-item">
                             <div class="action-text">
-                                <h4>Daily Standup</h4>
-                                <p>Required 30-minute sync. (<span id="standup-countdown">30m</span> left)</p>
-                            </div>
-                            <button class="join-btn">Join Call</button>
-                        </div>
-
-                        <div class="action-item">
-                            <div class="action-text">
-                                <h4>1. Morning Check-in</h4>
+                                <h4>Morning Check-in</h4>
                                 <p id="checkin-status-text">Confirm you are at your desk.</p>
                             </div>
                             <label class="radio-container">
                                 <input type="radio" name="checkin" id="checkin-radio">
                                 <span class="radio-label">I'm Online</span>
                             </label>
-                        </div>
-                        
-                        <div class="action-item checkout-box">
-                            <div class="action-text">
-                                <h4>2. Evening Check-out</h4>
-                                <p id="checkout-status-text">Required voice note: What did you do today?</p>
-                            </div>
-                            <div class="voice-recorder">
-                                <button id="mic-btn" class="text-mic-btn">Record</button>
-                                <span id="recording-time">00:00</span>
-                                <button id="submit-voice" class="submit-voice-btn" disabled>Submit</button>
-                            </div>
                         </div>
                     </div>
                     <button class="reset-btn text-link">Reset for Demo</button>

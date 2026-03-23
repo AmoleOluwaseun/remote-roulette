@@ -164,94 +164,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- Voice Note Check-out ---
-    const micBtn = document.getElementById('mic-btn');
-    const recordingTime = document.getElementById('recording-time');
-    const submitVoiceBtn = document.getElementById('submit-voice');
-    const checkoutStatusText = document.getElementById('checkout-status-text');
-
-    let isRecording = false;
-    let timerInterval;
-    let seconds = 0;
-
-    function formatTime(sec) {
-        const m = Math.floor(sec / 60).toString().padStart(2, '0');
-        const s = (sec % 60).toString().padStart(2, '0');
-        return `${m}:${s}`;
-    }
-
-    micBtn.addEventListener('click', () => {
-        if (!isRecording) {
-            // Start recording demo
-            isRecording = true;
-            micBtn.classList.add('recording');
-            micBtn.innerText = "Stop";
-            submitVoiceBtn.disabled = true;
-            
-            seconds = 0;
-            recordingTime.innerText = formatTime(seconds);
-            checkoutStatusText.innerText = "Recording...";
-            checkoutStatusText.style.color = "var(--danger-red)";
-            
-            timerInterval = setInterval(() => {
-                seconds++;
-                recordingTime.innerText = formatTime(seconds);
-            }, 1000);
-        } else {
-            // Stop recording demo
-            isRecording = false;
-            clearInterval(timerInterval);
-            micBtn.classList.remove('recording');
-            micBtn.innerText = "Record";
-            submitVoiceBtn.disabled = false;
-            checkoutStatusText.innerText = "Voice note ready. Click Submit.";
-            checkoutStatusText.style.color = "var(--text-secondary)";
-        }
-    });
-
-    submitVoiceBtn.addEventListener('click', () => {
-        checkoutStatusText.innerText = "Check-out completed successfully!";
-        checkoutStatusText.style.color = "var(--success-green)";
-        checkoutStatusText.style.fontWeight = "600";
-        submitVoiceBtn.disabled = true;
-        
-        // Disable mic after submission
-        micBtn.disabled = true;
-        micBtn.style.opacity = "0.5";
-    });
-
     function resetCheckinForm() {
         // Reset radio
         checkinRadio.checked = false;
         checkinStatusText.innerText = "Confirm you are at your desk.";
         checkinStatusText.style.color = "";
         checkinStatusText.style.fontWeight = "normal";
-
-        // Reset voice note
-        isRecording = false;
-        clearInterval(timerInterval);
-        seconds = 0;
-        recordingTime.innerText = "00:00";
-        micBtn.classList.remove('recording');
-        micBtn.innerText = "Record";
-        micBtn.disabled = false;
-        micBtn.style.opacity = "1";
-        submitVoiceBtn.disabled = true;
-        checkoutStatusText.innerText = "Required voice note: What did you do today?";
-        checkoutStatusText.style.color = "var(--text-secondary)";
-        checkoutStatusText.style.fontWeight = "normal";
-    }
-
-    // --- Standup Countdown ---
-    let minutes = 30;
-    const countdownEl = document.getElementById('standup-countdown');
-    if (countdownEl) {
-        setInterval(() => {
-            if(minutes > 0) {
-                minutes--;
-                countdownEl.innerText = `${minutes}m`;
-            }
-        }, 60000);
     }
 
     // --- Calendar Modal Logic ---
