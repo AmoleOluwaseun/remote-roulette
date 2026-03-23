@@ -242,6 +242,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeModalBtn = document.getElementById('close-modal-btn');
     const calendarDays = document.getElementById('calendar-days');
 
+    // --- Date Helpers ---
+    function getWeekStart(date) {
+        const d = new Date(date);
+        const day = d.getDay(); // 0 is Sunday
+        const diff = d.getDate() - day;
+        const weekStart = new Date(d.setDate(diff));
+        weekStart.setHours(0, 0, 0, 0);
+        return weekStart;
+    }
+
+    function formatDate(date) {
+        return date.toISOString().split('T')[0];
+    }
+
+    function getWeekRangeString(startDate) {
+        const start = new Date(startDate);
+        const end = new Date(startDate);
+        end.setDate(start.getDate() + 6);
+        
+        const options = { month: 'long', day: 'numeric' };
+        const startStr = start.toLocaleDateString('en-US', options);
+        const endStr = end.toLocaleDateString('en-US', { day: 'numeric', year: 'numeric' });
+        return `Weekly Schedule: ${startStr} - ${endStr}`;
+    }
+
     viewCalendarBtn.addEventListener('click', () => {
         calendarModal.classList.remove('hidden-state');
         backToMenuFromSched.classList.add('hidden-state'); // Hide back button if accessed from main page
@@ -281,18 +306,29 @@ document.addEventListener('DOMContentLoaded', () => {
     function generateCalendar() {
         calendarDays.innerHTML = '';
         const monthYearEl = document.getElementById('calendar-month-year');
-        if (monthYearEl) monthYearEl.innerText = "Weekly Schedule: March 16 - 22, 2026";
+        
+        const today = new Date();
+        const weekStart = getWeekStart(today);
+        
+        if (monthYearEl) {
+            monthYearEl.innerText = getWeekRangeString(weekStart);
+        }
         
         const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-        const weekStart = 15; // Sun 15th
-        const todayDate = new Date().getDate(); // Dynamic system date
+        const todayDateNum = today.getDate();
+        const todayMonth = today.getMonth();
+        const todayYear = today.getFullYear();
         
         for(let i = 0; i < 7; i++) {
-            const dayNum = weekStart + i;
+            const currentDay = new Date(weekStart);
+            currentDay.setDate(weekStart.getDate() + i);
+            
+            const dayNum = currentDay.getDate();
             const dayName = dayNames[i];
+            const isToday = dayNum === todayDateNum && currentDay.getMonth() === todayMonth && currentDay.getFullYear() === todayYear;
             
             const cell = document.createElement('div');
-            cell.className = `cal-cell ${dayNum === todayDate ? 'today' : ''}`;
+            cell.className = `cal-cell ${isToday ? 'today' : ''}`;
             
             // Date Box (Left side)
             const dateBox = document.createElement('div');
@@ -325,8 +361,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (scheduledStaff.length > 0) {
                     // Filter for only 'Onsite' staff to show in 'Office List'
                     displayList = scheduledStaff.filter(s => s.status === 'Onsite');
-                } else {
-                    // Fallback to demo names if no schedule exists yet
+                } else if (!currentSchedule._weekStart) {
+                    // Fallback to demo names ONLY if no week is initialized at all (old data format)
                     const num = Math.floor(Math.random() * 3) + 2;
                     displayList = getRandomWorkers(num).map(name => ({ email: name, location: Math.random() > 0.5 ? 'Lagos' : 'Ibadan' }));
                 }
@@ -429,7 +465,23 @@ document.addEventListener('DOMContentLoaded', () => {
     async function loadSchedule() {
         try {
             const res = await fetch('/api/schedule');
-            currentSchedule = await res.json();
+            const data = await res.json();
+            
+            const today = new Date();
+            const currentWeekId = formatDate(getWeekStart(today));
+            
+            if (data._weekStart !== currentWeekId) {
+                console.log("Schedule is outdated or new week started. Clearing...");
+                currentSchedule = { _weekStart: currentWeekId };
+                // Optionally save empty schedule back to server
+                await fetch('/api/schedule', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(currentSchedule)
+                });
+            } else {
+                currentSchedule = data;
+            }
         } catch (err) {
             console.error("Failed to load schedule:", err);
         }
@@ -506,7 +558,41 @@ document.addEventListener('DOMContentLoaded', () => {
     menuCreateBtn.addEventListener('click', () => {
         managerMenuModal.classList.add('hidden-state');
         createScheduleModal.classList.remove('hidden-state');
+        populateHolidayChecklist();
     });
+
+    function populateHolidayChecklist() {
+        const checklist = document.getElementById('holiday-check-list');
+        if (!checklist) return;
+        checklist.innerHTML = '';
+        
+        const weekStart = getWeekStart(new Date());
+        const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        
+        for (let i = 1; i <= 5; i++) { // Mon-Fri
+            const d = new Date(weekStart);
+            d.setDate(weekStart.getDate() + i);
+            const dayNum = d.getDate();
+            const dayName = dayNames[i];
+            const suffix = (dayNum) => {
+                if (dayNum > 3 && dayNum < 21) return 'th';
+                switch (dayNum % 10) {
+                    case 1:  return "st";
+                    case 2:  return "nd";
+                    case 3:  return "rd";
+                    default: return "th";
+                }
+            };
+
+            const label = document.createElement('label');
+            label.className = 'day-check-item';
+            label.innerHTML = `
+                <input type="checkbox" class="holiday-checkbox" value="${dayNum}">
+                <span class="day-name">${dayName} (${dayNum}${suffix(dayNum)})</span>
+            `;
+            checklist.appendChild(label);
+        }
+    }
 
     // Back Buttons
     backToMenuFromStaff.addEventListener('click', () => {
@@ -549,8 +635,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function generateWeeklySchedule(holidays) {
         const locations = ['Lagos', 'Ibadan'];
-        const workingDays = [16, 17, 18, 19, 20]; // Mon-Fri
-        const newSchedule = { "15": [], "16": [], "17": [], "18": [], "19": [], "20": [], "21": [] };
+        const today = new Date();
+        const weekStart = getWeekStart(today);
+        
+        const workingDays = [];
+        for (let i = 1; i <= 5; i++) { // Mon-Fri
+            const d = new Date(weekStart);
+            d.setDate(weekStart.getDate() + i);
+            workingDays.push(d.getDate());
+        }
+
+        const newSchedule = { _weekStart: formatDate(weekStart) };
+        for (let i = 0; i < 7; i++) {
+            const d = new Date(weekStart);
+            d.setDate(weekStart.getDate() + i);
+            newSchedule[d.getDate()] = [];
+        }
+
+        const monDate = workingDays[0];
 
         // Group staff
         const staffByLoc = {
@@ -574,10 +676,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 workingDays.forEach(d => currentLocSchedule[d] = []);
 
                 // Rule 1: Monday Onsite
-                locStaff.forEach(s => currentLocSchedule[16].push({ ...s, status: 'Onsite' }));
+                locStaff.forEach(s => currentLocSchedule[monDate].push({ ...s, status: 'Onsite' }));
 
                 // Rule 4: Pick 2 Offsite days per staff from Tue-Fri
-                const tueFri = [17, 18, 19, 20];
+                const tueFri = workingDays.slice(1);
                 const validTueFri = tueFri.filter(d => !holidays.includes(d));
 
                 locStaff.forEach(s => {
