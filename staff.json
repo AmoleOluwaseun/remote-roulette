@@ -1,1 +1,74 @@
-["manager@workspace.com", "lead@workspace.com"]
+[
+  {
+    "email": "oluwaseunamole002@pitason.com",
+    "location": "Ibadan"
+  },
+  {
+    "email": "oluwastomiwa@gmail.com",
+    "location": "Ibadan"
+  },
+  {
+    "email": "titlope@pitason.com",
+    "location": "Ibadan"
+  },
+  {
+    "email": "emmanuel@gmail.com",
+    "location": "Ibadan"
+  },
+  {
+    "email": "taofeek@pitason.com",
+    "location": "Ibadan"
+  },
+  {
+    "email": "michael@gmail.com",
+    "location": "Ibadan"
+  },
+  {
+    "email": "frank@pitason.com",
+    "location": "Ibadan"
+  },
+  {
+    "email": "moyin@gmail.com",
+    "location": "Ibadan"
+  },
+  {
+    "email": "accountant@pitason.com",
+    "location": "Ibadan"
+  },
+  {
+    "email": "ade@gmail.com",
+    "location": "Ibadan"
+  },
+  {
+    "email": "iyanu@pitason.com",
+    "location": "Ibadan"
+  },
+  {
+    "email": "steve@gmail.com",
+    "location": "Ibadan"
+  },
+  {
+    "email": "segun@pitason.com",
+    "location": "Lagos"
+  },
+  {
+    "email": "dan@gmail.com",
+    "location": "Lagos"
+  },
+  {
+    "email": "esther@pitason.com",
+    "location": "Lagos"
+  },
+  {
+    "email": "damilare@gmail.com",
+    "location": "Lagos"
+  },
+  {
+    "email": "olamide@gmail.com",
+    "location": "Lagos"
+  },
+  {
+    "email": "timilehin@gmail.com",
+    "location": "Lagos"
+  }
+]

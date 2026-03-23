@@ -652,6 +652,10 @@ body {
     flex-direction: column;
 }
 
+.modal-content.small-modal {
+    max-width: 500px;
+}
+
 .modal-header {
     padding: 2rem;
     border-bottom: 1px solid var(--border-color);
@@ -663,6 +667,10 @@ body {
     background: var(--card-bg);
     border-radius: 20px 20px 0 0;
     z-index: 10;
+}
+
+.modal-header.no-close {
+    padding-bottom: 1.5rem;
 }
 
 .modal-title h2 {
@@ -690,6 +698,24 @@ body {
     color: var(--danger-red);
 }
 
+.back-link {
+    background: none;
+    border: none;
+    color: var(--brand-blue);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+    margin-bottom: 0.5rem;
+    display: block;
+    transition: transform 0.2s ease;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+    transform: translateX(-3px);
+}
+
 .calendar-wrapper {
     padding: 2rem;
 }
@@ -707,103 +733,118 @@ body {
 }
 
 .cal-nav-btn {
-    background: white;
-    border: 1px solid var(--border-color);
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600;
-    transition: all 0.2s;
-}
-
-.cal-nav-btn:hover {
-    background: var(--brand-light);
-    color: var(--brand-blue);
-    border-color: #bfdbfe;
+    display: none; /* Hide navigation for fixed weekly view */
 }
 
 /* CSS Grid Calendar */
 .calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
-}
-
-.cal-day-header {
-    text-align: center;
-    font-weight: 600;
-    color: var(--text-secondary);
-    font-size: 0.85rem;
-    padding: 0.5rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
 }
 
 .cal-days-container {
-    grid-column: 1 / -1;
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
 }
 
 .cal-cell {
     background: var(--bg-page);
     border: 1px solid var(--border-color);
-    border-radius: 8px;
-    min-height: 100px;
-    padding: 0.5rem;
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
     transition: all 0.2s;
-}
-
-.cal-cell:hover {
-    border-color: #bfdbfe;
-    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-}
-
-.cal-cell.empty {
-    background: transparent;
-    border-color: transparent;
 }
 
 .cal-cell.today {
     border-color: var(--brand-blue);
     background: var(--brand-light);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
+}
+
+.cal-date-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 80px;
+    padding-right: 2rem;
+    border-right: 1px solid var(--border-color);
+}
+
+.cal-day-name {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
 }
 
 .cal-date {
-    font-weight: 600;
-    font-size: 0.9rem;
-    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: 800;
     color: var(--text-primary);
+    line-height: 1;
+    margin-top: 0.25rem;
 }
 
-.cal-cell.today .cal-date {
+.cal-cell.today .cal-date, .cal-cell.today .cal-day-name {
     color: var(--brand-blue);
 }
 
 /* Office workers list */
 .office-list {
     display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    overflow-y: auto;
-    font-size: 0.75rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    flex-grow: 1;
+}
+
+.worker-badge {
+    background: white;
+    border: 1px solid var(--border-color);
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+}
+
+.worker-badge.highlight-me {
+    background: linear-gradient(135deg, var(--brand-blue) 0%, #1d4ed8 100%);
+    color: white;
+    border-color: var(--brand-blue);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.worker-badge.highlight-me .worker-name {
+    color: white;
+}
+
+.worker-badge.highlight-me .worker-location {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
 }
 
 .worker-name {
-    background: var(--office-bg);
-    color: var(--office-orange);
-    padding: 0.15rem 0.4rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.worker-location {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--text-secondary);
+    background: var(--bg-page);
+    padding: 0.1rem 0.4rem;
     border-radius: 4px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-weight: 500;
 }
 
 .calendar-legend {
@@ -859,11 +900,195 @@ body {
 }
 
 .small-modal {
-    max-width: 400px;
+    max-width: 450px;
+}
+
+.menu-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.menu-btn {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    width: 100%;
+    padding: 1.25rem;
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.menu-btn:hover {
+    background: var(--brand-light);
+    border-color: #bfdbfe;
+    transform: translateX(5px);
+}
+
+.menu-btn .icon {
+    font-size: 1.5rem;
+    filter: grayscale(1);
+    transition: filter 0.2s ease;
+}
+
+.menu-btn:hover .icon {
+    filter: grayscale(0);
+}
+
+.menu-btn .btn-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.menu-btn strong {
+    font-size: 1rem;
+    color: var(--text-primary);
+}
+
+.menu-btn span:not(.icon) {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.menu-btn.danger-btn:hover {
+    background: #fff1f2;
+    border-color: #fecdd3;
+    transform: translateX(5px);
+}
+
+.menu-btn.danger-btn:hover strong {
+    color: var(--danger-red);
+}
+
+.holiday-selection {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.section-hint {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+.day-check-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.day-check-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--bg-page);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.day-check-item:hover {
+    background: var(--brand-light);
+    border-color: #bfdbfe;
+}
+
+.day-check-item input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--brand-blue);
+    cursor: pointer;
+}
+
+.day-name {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.action-footer {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
 }
 
 .modal-body {
-    padding: 2rem;
+    padding: 2.5rem 2rem;
+}
+
+.footer-note {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.input-group {
+    display: flex;
+    gap: 1rem;
+    margin: 1.5rem 0;
+    flex-wrap: wrap;
+}
+
+.input-group input {
+    flex-grow: 1;
+    padding: 0.8rem 1.25rem;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    font-size: 1rem;
+    background: var(--bg-page);
+    transition: all 0.2s;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--brand-blue);
+    box-shadow: 0 0 0 4px var(--brand-light);
+}
+
+/* Processing Modal Styles */
+.loading-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 2rem;
+    text-align: center;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid var(--brand-light);
+    border-top: 4px solid var(--brand-blue);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1.5rem;
+}
+
+.loading-text {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.loading-sub {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 .input-group, .add-staff-form {
@@ -872,26 +1097,38 @@ body {
     margin-bottom: 1rem;
 }
 
-.input-group input {
-    flex-grow: 1;
+.input-group input, .add-staff-form input, .staff-select {
     padding: 0.75rem 1rem;
     border: 1px solid var(--border-color);
     border-radius: 8px;
     font-family: inherit;
-    font-size: 0.95rem;
+    font-size: 0.85rem;
+    background: white;
+}
+
+.add-staff-form {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
 }
 
 .add-staff-form input {
-    flex: 3; /* Make input significantly wider than button */
-    padding: 0.75rem 1rem;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    font-family: inherit;
-    font-size: 0.95rem;
+    flex: 4;
+}
+
+.staff-select {
+    flex: 2;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
 }
 
 .add-staff-form .primary-btn {
     flex: 1;
+    min-width: 100px;
 }
 
 .input-group input:focus, .add-staff-form input:focus {
@@ -906,13 +1143,27 @@ body {
     margin-top: 0.5rem;
 }
 
+.success-text {
+    color: var(--success-green);
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+    font-weight: 500;
+}
+
 .staff-list-container {
     margin-top: 2rem;
 }
 
+.staff-list-container {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 2px dashed var(--border-color);
+}
+
 .staff-list-container h3 {
-    font-size: 1.1rem;
-    margin-bottom: 1rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
     color: var(--text-primary);
 }
 
@@ -920,10 +1171,11 @@ body {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    max-height: 250px;
+    gap: 0.75rem;
+    max-height: 500px;
     overflow-y: auto;
     padding-right: 0.5rem;
+    margin-top: 1rem;
 }
 
 .email-list li {
@@ -934,8 +1186,200 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 1rem;
     font-size: 0.9rem;
     color: var(--text-secondary);
+}
+
+.staff-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    flex-grow: 1;
+}
+
+.staff-email {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.location-badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    padding: 0.1rem 0.5rem;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+}
+
+.location-badge.lagos {
+    background: #e0f2fe;
+    color: #0369a1;
+}
+
+.location-badge.ibadan {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.status-badge.remote-badge {
+    background: #f0fdf4;
+    color: #166534;
+}
+
+/* --- Premium Holiday Card --- */
+#holiday-card {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08), 
+                inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+}
+
+#holiday-card .card-inner {
+    background: transparent;
+    border: none;
+    padding: 3rem 2rem;
+    z-index: 2;
+    position: relative;
+}
+
+.holiday-decorator {
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(251, 191, 36, 0.2) 0%, rgba(251, 191, 36, 0) 70%);
+    border-radius: 50%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.holiday-badge-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.card-icon-wrapper {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 25px rgba(245, 158, 11, 0.3),
+                0 0 0 8px rgba(251, 191, 36, 0.1);
+    animation: iconEntrance 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+#holiday-card .card-icon {
+    font-size: 3.5rem;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes iconEntrance {
+    0% { transform: scale(0) rotate(-45deg); opacity: 0; }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0); }
+    50% { transform: translateY(-10px) rotate(5deg); }
+}
+
+.card-status {
+    font-size: 2.2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #92400e 0%, #b45309 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+}
+
+.holiday-label {
+    display: inline-block;
+    padding: 0.5rem 1.25rem;
+    background: rgba(254, 243, 199, 0.8);
+    color: #92400e;
+    border-radius: 99px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    box-shadow: 0 2px 4px rgba(146, 64, 14, 0.05);
+}
+
+.creative-message {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #78350f;
+    font-style: italic;
+    font-weight: 500;
+    margin: 2rem 0;
+    opacity: 0.9;
+}
+
+.holiday-tips-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.tip-item {
+    background: rgba(255, 255, 255, 0.6);
+    padding: 1rem;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    transition: all 0.3s ease;
+    cursor: default;
+}
+
+.tip-item:hover {
+    background: white;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.04);
+}
+
+.tip-icon {
+    font-size: 1.5rem;
+}
+
+.tip-text {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #92400e;
+    text-align: center;
+}
+
+#holiday-card.active-state {
+    transform: scale(1);
+    opacity: 1;
+}
+
+#holiday-card.hidden-state {
+    transform: scale(0.9) translateY(20px);
+    opacity: 0;
+}
+
+.status-badge.office-badge {
+    background: #fef3c7;
+    color: #92400e;
 }
 
 .remove-staff-btn {
@@ -966,5 +1410,14 @@ body {
 
     .voting-section {
         grid-template-columns: 1fr;
+    }
+
+    .input-group, .add-staff-form {
+        flex-direction: column;
+    }
+
+    .input-group input, .add-staff-form input, .staff-select, .primary-btn {
+        width: 100%;
+        flex: none;
     }
 }

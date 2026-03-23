@@ -69,20 +69,12 @@
                 <div id="remote-card" class="card result-card hidden-state">
                     <div class="status-badge remote-badge">Remote Day</div>
                     <h2 class="result-title">Working from Home!</h2>
-                    <p class="result-desc">Enjoy your remote day. Please complete your check-in and join the daily standup.</p>
+                    <p class="result-desc">Enjoy your remote day. Please complete your morning check-in.</p>
                     
                     <div class="action-list">
                         <div class="action-item">
                             <div class="action-text">
-                                <h4>Daily Standup</h4>
-                                <p>Required 30-minute sync. (<span id="standup-countdown">30m</span> left)</p>
-                            </div>
-                            <button class="join-btn">Join Call</button>
-                        </div>
-
-                        <div class="action-item">
-                            <div class="action-text">
-                                <h4>1. Morning Check-in</h4>
+                                <h4>Morning Check-in</h4>
                                 <p id="checkin-status-text">Confirm you are at your desk.</p>
                             </div>
                             <label class="radio-container">
@@ -90,37 +82,35 @@
                                 <span class="radio-label">I'm Online</span>
                             </label>
                         </div>
-                        
-                        <div class="action-item checkout-box">
-                            <div class="action-text">
-                                <h4>2. Evening Check-out</h4>
-                                <p id="checkout-status-text">Required voice note: What did you do today?</p>
-                            </div>
-                            <div class="voice-recorder">
-                                <button id="mic-btn" class="text-mic-btn">Record</button>
-                                <span id="recording-time">00:00</span>
-                                <button id="submit-voice" class="submit-voice-btn" disabled>Submit</button>
-                            </div>
-                        </div>
                     </div>
                     <button class="reset-btn text-link">Reset for Demo</button>
+                </div>
+
+                <!-- Holiday Card -->
+                <div id="holiday-card" class="reveal-card hidden-state">
+                    <div class="holiday-decorator"></div>
+                    <div class="card-inner">
+                        <div class="holiday-badge-container">
+                            <div class="card-icon-wrapper">
+                                <div class="card-icon">🎉</div>
+                            </div>
+                        </div>
+                        <h2 class="card-status">Public Holiday!</h2>
+                        <div class="holiday-header">
+                            <span id="holiday-name" class="holiday-label">Relaxation Mode: ON</span>
+                        </div>
+                        <div class="card-divider"></div>
+                        <div class="holiday-content">
+                            <p id="holiday-message" class="creative-message">Lucky you! enjoy your celebration or have lots of rest today, don't you dare think about working today....</p>
+                        </div>
+                    </div>
                 </div>
 
                 <div id="office-card" class="card result-card hidden-state">
                     <div class="status-badge office-badge">Office Day</div>
                     <h2 class="result-title">See You at the Office!</h2>
                     <p class="result-desc">Head in and collaborate with the team today.</p>
-                    
-                    <div class="action-list">
-                        <div class="action-item">
-                            <div class="action-text">
-                                <h4>Building Access</h4>
-                                <p>Your access card is active for entry.</p>
-                            </div>
-                            <div class="status-indicator">Active</div>
-                        </div>
-                    </div>
-                    <button class="reset-btn text-link">Reset for Demo</button>
+                    <button class="reset-btn text-link">Click to Reset</button>
                 </div>
             </div>
         </div>
@@ -132,30 +122,8 @@
                 <li><strong>Holiday Guarantee:</strong> In the event of a public holiday, you still get a work from home day that week.</li>
                 <li><strong>Office is Open:</strong> The office remains strictly open on your remote day if you prefer to come in.</li>
                 <li><strong>Professionalism:</strong> It is still a workday, expectations remain the same. No excuses.</li>
-                <li><strong>Check-in/Out Required:</strong> Check-in upon starting. Check-out requires a voice note detailing your day's work. Missing it counts as absent.</li>
+                <li><strong>Check-in Required:</strong> Check-in upon starting. Missing it counts as absent.</li>
             </ul>
-        </div>
-        <div class="voting-section full-width">
-            <div class="vote-card">
-                <h4>Anonymous Day Preference</h4>
-                <p>Vote for your preferred day to slightly increase its chances.</p>
-                <div class="day-votes">
-                    <button class="vote-btn" data-day="Mon">Mon</button>
-                    <button class="vote-btn" data-day="Tue">Tue</button>
-                    <button class="vote-btn" data-day="Wed">Wed</button>
-                    <button class="vote-btn" data-day="Thu">Thu</button>
-                    <button class="vote-btn" data-day="Fri">Fri</button>
-                </div>
-            </div>
-
-            <div class="vote-card">
-                <h4>Monthly Satisfaction</h4>
-                <p>Are you happy with the days selected this month?</p>
-                <div class="satisfaction-votes">
-                    <button class="vote-btn sat-btn">Yes</button>
-                    <button class="vote-btn sat-btn">No</button>
-                </div>
-            </div>
         </div>
 
         <div class="admin-access">
@@ -163,13 +131,33 @@
         </div>
     </main>
 
+    <!-- User Email Initial Modal -->
+    <div id="user-email-modal" class="modal-overlay hidden-state">
+        <div class="modal-content small-modal">
+            <div class="modal-header no-close">
+                <div class="modal-title">
+                    <h2>Welcome to Remote Roulette</h2>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <p>Please enter your work email to get started.</p>
+                    <input type="email" id="user-work-email-input" placeholder="e.g. name@workspace.com"><br/>
+                </div>
+                <button id="save-user-email-btn" class="primary-btn">Save Email</button>
+                <p id="user-email-hint" class="footer-note">This helps us personalize your office schedule view.</p>
+            </div>
+        </div>
+    </div>
+
     <!-- Calendar Modal -->
     <div id="calendar-modal" class="modal-overlay hidden-state">
         <div class="modal-content">
             <div class="modal-header">
                 <div class="modal-title">
+                    <button id="back-to-menu-from-sched" class="back-link hidden-state">← Back to Dashboard</button>
                     <h2>Office Schedule</h2>
-                    <p>See who is working in the office this month.</p>
+                    <p>Weekly view of team coverage</p>
                 </div>
                 <button id="close-modal-btn" class="close-btn">&times;</button>
             </div>
@@ -182,16 +170,7 @@
                 </div>
                 
                 <div class="calendar-grid">
-                    <!-- Days of week -->
-                    <div class="cal-day-header">Sun</div>
-                    <div class="cal-day-header">Mon</div>
-                    <div class="cal-day-header">Tue</div>
-                    <div class="cal-day-header">Wed</div>
-                    <div class="cal-day-header">Thu</div>
-                    <div class="cal-day-header">Fri</div>
-                    <div class="cal-day-header">Sat</div>
-                    
-                    <!-- Calendar days injected by JS -->
+                    <!-- Calendar days injected by JS as individual rows -->
                     <div id="calendar-days" class="cal-days-container"></div>
                 </div>
                 
@@ -223,11 +202,93 @@
         </div>
     </div>
 
+    <!-- Manager Menu Modal -->
+    <div id="manager-menu-modal" class="modal-overlay hidden-state">
+        <div class="modal-content small-modal">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <h2>Manager Dashboard</h2>
+                    <p>Select an action to perform.</p>
+                </div>
+                <button id="close-menu-btn" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="menu-actions">
+                    <button id="menu-create-btn" class="menu-btn">
+                        <span class="icon">📅</span>
+                        <div class="btn-text">
+                            <strong>Create Schedule</strong>
+                            <span>Generate new assignments</span>
+                        </div>
+                    </button>
+                    <button id="menu-add-staff-btn" class="menu-btn">
+                        <span class="icon">👤</span>
+                        <div class="btn-text">
+                            <strong>Add Staff</strong>
+                            <span>Manage team members</span>
+                        </div>
+                    </button>
+                    <button id="menu-view-sched-btn" class="menu-btn">
+                        <span class="icon">👁️</span>
+                        <div class="btn-text">
+                            <strong>View Weekly Schedule</strong>
+                            <span>Check current coverage</span>
+                        </div>
+                    </button>
+                    <button id="menu-clear-sched-btn" class="menu-btn danger-btn">
+                        <span class="icon">🗑️</span>
+                        <div class="btn-text">
+                            <strong>Clear Calendar</strong>
+                            <span>Reset this week's schedule</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Schedule Modal -->
+    <div id="create-schedule-modal" class="modal-overlay hidden-state">
+        <div class="modal-content small-modal">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <button id="back-to-menu-from-create" class="back-link">← Back to Dashboard</button>
+                    <h2>Create Schedule</h2>
+                    <p>Step 1: Select public holidays for this week.</p>
+                </div>
+                <button id="close-create-btn" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="holiday-selection">
+                    <p class="section-hint">Excluded days will have no onsite/offsite assignments.</p>
+                    <div id="holiday-check-list" class="day-check-list">
+                        <!-- Holiday checkboxes injected by JS -->
+                    </div>
+                    
+                    <div class="action-footer">
+                        <button id="proceed-to-alg-btn" class="primary-btn">Next: Generate Schedule</button>
+                        <p class="footer-note">If there are no holidays, leave all unchecked and proceed.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Processing Modal -->
+    <div id="processing-modal" class="modal-overlay hidden-state">
+        <div class="modal-content small-modal loading-content">
+            <div class="spinner"></div>
+            <h2 class="loading-text">Generating Weekly Schedule...</h2>
+            <p class="loading-sub">Optimizing staff distribution and location coverage.</p>
+        </div>
+    </div>
+
     <!-- Staff Management Modal -->
     <div id="staff-management-modal" class="modal-overlay hidden-state">
         <div class="modal-content">
             <div class="modal-header">
                 <div class="modal-title">
+                    <button id="back-to-menu-from-staff" class="back-link">← Back to Dashboard</button>
                     <h2>Staff Management</h2>
                     <p>View and manage team email addresses.</p>
                 </div>
@@ -236,13 +297,19 @@
             <div class="modal-body">
                 <div class="add-staff-form">
                     <input type="email" id="staff-email-input" placeholder="Enter staff email...">
+                    <select id="staff-location-input" class="staff-select">
+                        <option value="Lagos">Lagos</option>
+                        <option value="Ibadan">Ibadan</option>
+                    </select>
                     <button id="add-staff-btn" class="primary-btn">Add Staff</button>
                 </div>
+                <p id="staff-email-error" class="error-text hidden-state">Please enter a valid email address.</p>
+                <p id="staff-add-success" class="success-text hidden-state">Staff added successfully!</p>
                 
                 <div class="staff-list-container">
                     <h3>Added Staff</h3>
                     <ul id="staff-email-list" class="email-list">
-                        <!-- Emails will be injected here -->
+                        <!-- Staff info will be injected here -->
                     </ul>
                 </div>
             </div>
