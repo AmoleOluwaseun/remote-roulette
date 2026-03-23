@@ -74,7 +74,8 @@ document.addEventListener('DOMContentLoaded', () => {
             state = 'NoSchedule';
             console.log("Weekly schedule is not yet generated.");
         } else {
-            console.log("User not found in today's schedule, using random fallback.");
+            state = 'NotFound';
+            console.log("User not found in today's schedule.");
         }
         
         setTimeout(() => {
@@ -98,31 +99,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 remoteCard.classList.remove('hidden-state');
                 remoteCard.classList.add('active-state');
                 resetCheckinForm();
-            } else if (state === 'Onsite' || state === 'NoSchedule') {
+            } else if (state === 'Onsite' || state === 'NoSchedule' || state === 'NotFound') {
                 const title = officeCard.querySelector('.result-title');
                 const desc = officeCard.querySelector('.result-desc');
                 
                 if (state === 'NoSchedule') {
                     title.innerText = "Schedule Pending";
                     desc.innerText = "The weekly schedule has not yet been generated. Please work from the office physically today, it's the same for everyone else until the manager creates the new schedule.";
+                } else if (state === 'NotFound') {
+                    title.innerText = "Check with Your Manager";
+                    desc.innerText = "Your email was not found on today's schedule. Please speak to your manager for your assignment. In the meantime, please work from the office.";
                 } else {
                     title.innerText = "See You at the Office!";
-                    desc.innerText = "Head in and collaborate with the team today.";
+                    desc.innerText = "Head in and collaborate with the team today. Please complete your morning check-in.";
                 }
                 
                 officeCard.classList.remove('hidden-state');
                 officeCard.classList.add('active-state');
-            } else {
-                // Random fallback logic
-                const isRemote = Math.random() > 0.5;
-                if (isRemote) {
-                    remoteCard.classList.remove('hidden-state');
-                    remoteCard.classList.add('active-state');
-                    resetCheckinForm();
-                } else {
-                    officeCard.classList.remove('hidden-state');
-                    officeCard.classList.add('active-state');
-                }
             }
         }, 2000); 
     });
