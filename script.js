@@ -389,6 +389,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const menuCreateBtn = document.getElementById('menu-create-btn');
     const menuAddStaffBtn = document.getElementById('menu-add-staff-btn');
     const menuViewSchedBtn = document.getElementById('menu-view-sched-btn');
+    const menuClearSchedBtn = document.getElementById('menu-clear-sched-btn');
     
     const secretInput = document.getElementById('secret-phrase-input');
     const loginSubmitBtn = document.getElementById('login-submit-btn');
@@ -511,6 +512,28 @@ document.addEventListener('DOMContentLoaded', () => {
         managerMenuModal.classList.add('hidden-state');
         createScheduleModal.classList.remove('hidden-state');
         populateHolidayChecklist();
+    });
+
+    menuClearSchedBtn.addEventListener('click', async () => {
+        const confirmed = confirm("Are you sure you want to clear this week's schedule? This will reset everyone's assignments.");
+        if (!confirmed) return;
+
+        const today = new Date();
+        const emptySchedule = { _weekStart: formatDate(getWeekStart(today)) };
+
+        try {
+            await fetch('/api/schedule', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(emptySchedule)
+            });
+            currentSchedule = emptySchedule;
+            managerMenuModal.classList.add('hidden-state');
+            alert("Schedule cleared. Staff will be directed to the office until a new schedule is created.");
+        } catch (err) {
+            console.error("Failed to clear schedule:", err);
+            alert("Something went wrong. Please try again.");
+        }
     });
 
     function populateHolidayChecklist() {

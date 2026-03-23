@@ -955,6 +955,16 @@ body {
     color: var(--text-secondary);
 }
 
+.menu-btn.danger-btn:hover {
+    background: #fff1f2;
+    border-color: #fecdd3;
+    transform: translateX(5px);
+}
+
+.menu-btn.danger-btn:hover strong {
+    color: var(--danger-red);
+}
+
 .holiday-selection {
     display: flex;
     flex-direction: column;
