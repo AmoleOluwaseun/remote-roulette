@@ -4,22 +4,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const processingCard = document.getElementById('processing-card');
     const remoteCard = document.getElementById('remote-card');
     const officeCard = document.getElementById('office-card');
+    const holidayCard = document.getElementById('holiday-card');
     
     const revealBtn = document.getElementById('reveal-btn');
     const resetBtns = document.querySelectorAll('.reset-btn');
 
     function hideAllCards() {
-        revealCard.classList.remove('active-state');
-        revealCard.classList.add('hidden-state');
+        if (revealCard) {
+            revealCard.classList.remove('active-state');
+            revealCard.classList.add('hidden-state');
+        }
         
-        processingCard.classList.remove('active-state');
-        processingCard.classList.add('hidden-state');
+        if (processingCard) {
+            processingCard.classList.remove('active-state');
+            processingCard.classList.add('hidden-state');
+        }
         
-        remoteCard.classList.remove('active-state');
-        remoteCard.classList.add('hidden-state');
+        if (remoteCard) {
+            remoteCard.classList.remove('active-state');
+            remoteCard.classList.add('hidden-state');
+        }
         
-        officeCard.classList.remove('active-state');
-        officeCard.classList.add('hidden-state');
+        if (officeCard) {
+            officeCard.classList.remove('active-state');
+            officeCard.classList.add('hidden-state');
+        }
+
+        if (holidayCard) {
+            holidayCard.classList.remove('active-state');
+            holidayCard.classList.add('hidden-state');
+        }
     }
 
     revealBtn.addEventListener('click', () => {
