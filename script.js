@@ -68,14 +68,21 @@ document.addEventListener('DOMContentLoaded', () => {
         // Check if schedule for the week is empty
         const isScheduleEmpty = Object.keys(currentSchedule).filter(key => key !== '_weekStart').length === 0;
 
+        // Check if user is a known staff member
+        const isKnownStaff = staffMembers.some(s => s.email.toLowerCase() === (userEmail || '').toLowerCase());
+
         if (myAssignment) {
             state = myAssignment.status; // 'Onsite', 'Offsite', or 'Holiday'
         } else if (isScheduleEmpty) {
             state = 'NoSchedule';
             console.log("Weekly schedule is not yet generated.");
+        } else if (isKnownStaff) {
+            // On staff list but not assigned today → treat as WFH
+            state = 'Offsite';
+            console.log("Staff member not on today's schedule — defaulting to WFH.");
         } else {
             state = 'NotFound';
-            console.log("User not found in today's schedule.");
+            console.log("Email not found in staff list or schedule.");
         }
         
         setTimeout(() => {
@@ -145,11 +152,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- Check-in Radio ---
+    // --- Check-in Radio (Remote/WFH only) ---
     const checkinRadio = document.getElementById('checkin-radio');
     const checkinStatusText = document.getElementById('checkin-status-text');
-    const officeCheckinRadio = document.getElementById('office-checkin-radio');
-    const officeCheckinStatusText = document.getElementById('office-checkin-status-text');
 
     async function handleCheckin(radio, statusText, location) {
         if (radio.checked) {
@@ -174,26 +179,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     checkinRadio.addEventListener('change', () => handleCheckin(checkinRadio, checkinStatusText, 'Remote'));
-    if (officeCheckinRadio) {
-        officeCheckinRadio.addEventListener('change', () => handleCheckin(officeCheckinRadio, officeCheckinStatusText, 'Office'));
-    }
 
     function resetCheckinForm() {
-        // Reset remote radio
-        if (checkinRadio) {
-            checkinRadio.checked = false;
-            checkinStatusText.innerText = "Confirm you are at your desk.";
-            checkinStatusText.style.color = "";
-            checkinStatusText.style.fontWeight = "normal";
-        }
-
-        // Reset office radio
-        if (officeCheckinRadio) {
-            officeCheckinRadio.checked = false;
-            officeCheckinStatusText.innerText = "Confirm you are at the office.";
-            officeCheckinStatusText.style.color = "";
-            officeCheckinStatusText.style.fontWeight = "normal";
-        }
+        checkinRadio.checked = false;
+        checkinStatusText.innerText = "Confirm you are at your desk.";
+        checkinStatusText.style.color = "";
+        checkinStatusText.style.fontWeight = "normal";
     }
 
     // --- Calendar Modal Logic ---
