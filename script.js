@@ -609,6 +609,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     async function generateWeeklySchedule(holidays) {
+        const buddyPairs = [
+            ['adio.omolola@pitasonandsmartpro.com', 'titilope.hamzat@pitasonandsmartpro.com'],
+            ['ade.atoye@pitasonandsmartpro.com', 'iyanu.oluwatomisin@pitasonandsmartpro.com']
+        ];
+
         const locations = ['Lagos', 'Ibadan'];
         const today = new Date();
         const weekStart = getWeekStart(today);
@@ -704,7 +709,22 @@ document.addEventListener('DOMContentLoaded', () => {
                     return onsiteCount < 2 && locStaff.length >= 2;
                 });
 
-                if (!rule3Broken) {
+                // --- Buddy Pairs Constraint ---
+                const buddyRuleBroken = tueFri.some(d => {
+                    if (holidays.includes(d)) return false;
+                    return buddyPairs.some(pair => {
+                        const p1 = currentLocSchedule[d].find(s => s.email === pair[0]);
+                        const p2 = currentLocSchedule[d].find(s => s.email === pair[1]);
+                        if (p1 && p2) {
+                            return p1.status === 'Offsite' && p2.status === 'Offsite';
+                        }
+                        return false;
+                    });
+                });
+                
+                if (buddyRuleBroken) console.log(`[Buddy Rule] Trial rejected at attempt ${attempt}: Overlapping offsite days for buddies in ${loc}.`);
+
+                if (!rule3Broken && !buddyRuleBroken) {
                     success = true;
                     // Merge into main schedule
                     Object.keys(currentLocSchedule).forEach(d => {
