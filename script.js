@@ -71,18 +71,19 @@ document.addEventListener('DOMContentLoaded', () => {
         // Check if user is a known staff member
         const isKnownStaff = staffMembers.some(s => s.email.toLowerCase() === (userEmail || '').toLowerCase());
 
-        if (myAssignment) {
-            state = myAssignment.status; // 'Onsite', 'Offsite', or 'Holiday'
-        } else if (isScheduleEmpty) {
+        if (isScheduleEmpty) {
             state = 'NoSchedule';
-            console.log("Weekly schedule is not yet generated.");
+        } else if (myAssignment && myAssignment.status === 'Holiday') {
+            state = 'Holiday';
+        } else if (myAssignment) {
+            // On today's schedule = come into the office
+            state = 'Onsite';
         } else if (isKnownStaff) {
-            // On staff list but not assigned today → treat as WFH
+            // On staff list but not scheduled today = work from home
             state = 'Offsite';
-            console.log("Staff member not on today's schedule — defaulting to WFH.");
         } else {
+            // Not on staff list at all
             state = 'NotFound';
-            console.log("Email not found in staff list or schedule.");
         }
         
         setTimeout(() => {

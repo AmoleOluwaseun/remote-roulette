@@ -32,6 +32,11 @@
       "status": "Onsite"
     },
     {
+      "email": "oluwaseunamole002@pitason.com",
+      "location": "Ibadan",
+      "status": "Onsite"
+    },
+    {
       "email": "oluwastomiwa@gmail.com",
       "location": "Ibadan",
       "status": "Onsite"
@@ -96,17 +101,17 @@
     {
       "email": "dan@gmail.com",
       "location": "Lagos",
-      "status": "Onsite"
+      "status": "Offsite"
     },
     {
       "email": "esther@pitason.com",
       "location": "Lagos",
-      "status": "Offsite"
+      "status": "Onsite"
     },
     {
       "email": "damilare@gmail.com",
       "location": "Lagos",
-      "status": "Onsite"
+      "status": "Offsite"
     },
     {
       "email": "olamide@gmail.com",
@@ -116,7 +121,7 @@
     {
       "email": "timilehin@gmail.com",
       "location": "Lagos",
-      "status": "Onsite"
+      "status": "Offsite"
     },
     {
       "email": "oluwaseunamole002@pitason.com",
@@ -146,17 +151,17 @@
     {
       "email": "michael@gmail.com",
       "location": "Ibadan",
-      "status": "Offsite"
+      "status": "Onsite"
     },
     {
       "email": "frank@pitason.com",
       "location": "Ibadan",
-      "status": "Offsite"
+      "status": "Onsite"
     },
     {
       "email": "moyin@gmail.com",
       "location": "Ibadan",
-      "status": "Onsite"
+      "status": "Offsite"
     },
     {
       "email": "accountant@pitason.com",
@@ -176,7 +181,7 @@
     {
       "email": "steve@gmail.com",
       "location": "Ibadan",
-      "status": "Onsite"
+      "status": "Offsite"
     }
   ],
   "25": [
@@ -188,17 +193,17 @@
     {
       "email": "dan@gmail.com",
       "location": "Lagos",
-      "status": "Offsite"
+      "status": "Onsite"
     },
     {
       "email": "esther@pitason.com",
       "location": "Lagos",
-      "status": "Onsite"
+      "status": "Offsite"
     },
     {
       "email": "damilare@gmail.com",
       "location": "Lagos",
-      "status": "Offsite"
+      "status": "Onsite"
     },
     {
       "email": "olamide@gmail.com",
@@ -208,7 +213,7 @@
     {
       "email": "timilehin@gmail.com",
       "location": "Lagos",
-      "status": "Offsite"
+      "status": "Onsite"
     },
     {
       "email": "oluwaseunamole002@pitason.com",
@@ -238,17 +243,17 @@
     {
       "email": "michael@gmail.com",
       "location": "Ibadan",
-      "status": "Onsite"
+      "status": "Offsite"
     },
     {
       "email": "frank@pitason.com",
       "location": "Ibadan",
-      "status": "Onsite"
+      "status": "Offsite"
     },
     {
       "email": "moyin@gmail.com",
       "location": "Ibadan",
-      "status": "Offsite"
+      "status": "Onsite"
     },
     {
       "email": "accountant@pitason.com",
@@ -268,7 +273,7 @@
     {
       "email": "steve@gmail.com",
       "location": "Ibadan",
-      "status": "Offsite"
+      "status": "Onsite"
     }
   ],
   "26": [
@@ -280,17 +285,17 @@
     {
       "email": "dan@gmail.com",
       "location": "Lagos",
-      "status": "Onsite"
+      "status": "Offsite"
     },
     {
       "email": "esther@pitason.com",
       "location": "Lagos",
-      "status": "Offsite"
+      "status": "Onsite"
     },
     {
       "email": "damilare@gmail.com",
       "location": "Lagos",
-      "status": "Onsite"
+      "status": "Offsite"
     },
     {
       "email": "olamide@gmail.com",
@@ -300,7 +305,7 @@
     {
       "email": "timilehin@gmail.com",
       "location": "Lagos",
-      "status": "Onsite"
+      "status": "Offsite"
     },
     {
       "email": "oluwaseunamole002@pitason.com",
@@ -315,17 +320,17 @@
     {
       "email": "titlope@pitason.com",
       "location": "Ibadan",
-      "status": "Onsite"
+      "status": "Offsite"
     },
     {
       "email": "emmanuel@gmail.com",
       "location": "Ibadan",
-      "status": "Offsite"
+      "status": "Onsite"
     },
     {
       "email": "taofeek@pitason.com",
       "location": "Ibadan",
-      "status": "Onsite"
+      "status": "Offsite"
     },
     {
       "email": "michael@gmail.com",
@@ -340,7 +345,7 @@
     {
       "email": "moyin@gmail.com",
       "location": "Ibadan",
-      "status": "Onsite"
+      "status": "Offsite"
     },
     {
       "email": "accountant@pitason.com",
@@ -360,7 +365,7 @@
     {
       "email": "steve@gmail.com",
       "location": "Ibadan",
-      "status": "Onsite"
+      "status": "Offsite"
     }
   ],
   "27": [
@@ -372,17 +377,17 @@
     {
       "email": "dan@gmail.com",
       "location": "Lagos",
-      "status": "Offsite"
+      "status": "Onsite"
     },
     {
       "email": "esther@pitason.com",
       "location": "Lagos",
-      "status": "Onsite"
+      "status": "Offsite"
     },
     {
       "email": "damilare@gmail.com",
       "location": "Lagos",
-      "status": "Offsite"
+      "status": "Onsite"
     },
     {
       "email": "olamide@gmail.com",
@@ -392,7 +397,7 @@
     {
       "email": "timilehin@gmail.com",
       "location": "Lagos",
-      "status": "Offsite"
+      "status": "Onsite"
     },
     {
       "email": "oluwaseunamole002@pitason.com",
@@ -407,17 +412,17 @@
     {
       "email": "titlope@pitason.com",
       "location": "Ibadan",
-      "status": "Offsite"
+      "status": "Onsite"
     },
     {
       "email": "emmanuel@gmail.com",
       "location": "Ibadan",
-      "status": "Onsite"
+      "status": "Offsite"
     },
     {
       "email": "taofeek@pitason.com",
       "location": "Ibadan",
-      "status": "Offsite"
+      "status": "Onsite"
     },
     {
       "email": "michael@gmail.com",
@@ -432,7 +437,7 @@
     {
       "email": "moyin@gmail.com",
       "location": "Ibadan",
-      "status": "Offsite"
+      "status": "Onsite"
     },
     {
       "email": "accountant@pitason.com",
@@ -452,7 +457,7 @@
     {
       "email": "steve@gmail.com",
       "location": "Ibadan",
-      "status": "Offsite"
+      "status": "Onsite"
     }
   ],
   "28": [],
