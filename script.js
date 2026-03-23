@@ -650,8 +650,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 const currentLocSchedule = {};
                 workingDays.forEach(d => currentLocSchedule[d] = []);
 
-                // Rule 1: Monday Onsite
-                locStaff.forEach(s => currentLocSchedule[monDate].push({ ...s, status: 'Onsite' }));
+                // Rule 1: Monday (or any day) - check for holiday first
+                if (holidays.includes(monDate)) {
+                    locStaff.forEach(s => currentLocSchedule[monDate].push({ ...s, status: 'Holiday' }));
+                } else {
+                    locStaff.forEach(s => currentLocSchedule[monDate].push({ ...s, status: 'Onsite' }));
+                }
 
                 // Rule 4: Pick 2 Offsite days per staff from Tue-Fri
                 const tueFri = workingDays.slice(1);
