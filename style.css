@@ -736,6 +736,135 @@ body {
     display: none; /* Hide navigation for fixed weekly view */
 }
 
+.download-btn {
+    background: var(--brand-light);
+    color: var(--brand-blue);
+    border: 1px solid #bfdbfe;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.pdf-btn {
+    background: #fef2f2;
+    color: #991b1b;
+    border-color: #fecaca;
+}
+
+.download-btn:hover {
+    background: var(--brand-blue);
+    color: white;
+    border-color: var(--brand-blue);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.pdf-btn:hover {
+    background: #991b1b;
+    border-color: #991b1b;
+}
+
+.calendar-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.calendar-header h3 {
+    margin-right: auto;
+}
+
+/* --- Print Styles --- */
+@media print {
+    @page {
+        size: auto;
+        margin: 10mm;
+    }
+
+    html, body {
+        height: auto !important;
+        overflow: visible !important;
+        background: white !important;
+    }
+
+    body * {
+        visibility: hidden;
+    }
+
+    #calendar-modal, #calendar-modal * {
+        visibility: visible;
+    }
+
+    #calendar-modal {
+        position: static !important;
+        display: block !important;
+        opacity: 1 !important;
+        transform: none !important;
+        background: transparent !important;
+        padding: 0 !important;
+    }
+
+    .modal-overlay {
+        background: transparent !important;
+        backdrop-filter: none !important;
+        display: block !important;
+        position: static !important;
+        overflow: visible !important;
+    }
+
+    .modal-content {
+        box-shadow: none !important;
+        border: none !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: white !important;
+    }
+
+    .close-btn, .download-btn, .pdf-btn, .cal-nav-btn, .modal-header .back-link {
+        display: none !important;
+    }
+
+    .calendar-wrapper {
+        box-shadow: none !important;
+        border: none !important;
+        background: white !important;
+    }
+
+    .calendar-header {
+        border-bottom: 2px solid #333 !important;
+        padding-bottom: 1rem !important;
+        margin-bottom: 2rem !important;
+    }
+
+    .cal-day-card {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+        border: 1px solid #eee !important;
+        margin-bottom: 1.5rem !important;
+        padding: 1rem !important;
+    }
+
+    .calendar-grid, .cal-days-container {
+        display: block !important;
+    }
+
+    /* Preserve colors for onsite/offsite badges */
+    .status-badge {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+}
+
 /* CSS Grid Calendar */
 .calendar-grid {
     display: flex;

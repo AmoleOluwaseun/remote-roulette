@@ -193,6 +193,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const viewCalendarBtn = document.getElementById('view-calendar-btn');
     const closeModalBtn = document.getElementById('close-modal-btn');
     const calendarDays = document.getElementById('calendar-days');
+    const downloadCalendarBtn = document.getElementById('download-calendar-btn');
+    const downloadPdfBtn = document.getElementById('download-pdf-btn');
 
     // --- Date Helpers ---
     function getWeekStart(date) {
@@ -219,6 +221,49 @@ document.addEventListener('DOMContentLoaded', () => {
         return `Weekly Schedule: ${startStr} - ${endStr}`;
     }
 
+    function downloadScheduleCSV() {
+        if (!currentSchedule || Object.keys(currentSchedule).length <= 1) {
+            alert("No schedule available to download.");
+            return;
+        }
+
+        const weekStart = new Date(currentSchedule._weekStart);
+        let csvContent = "data:text/csv;charset=utf-8,";
+        csvContent += "Date,Day,Email,Location,Status\n";
+
+        // Sort days numerically
+        const days = Object.keys(currentSchedule)
+            .filter(key => !isNaN(key))
+            .sort((a, b) => parseInt(a) - parseInt(b));
+
+        days.forEach(day => {
+            const dayNum = parseInt(day);
+            const date = new Date(weekStart);
+            date.setDate(dayNum);
+            const dateStr = date.toISOString().split('T')[0];
+            const dayName = date.toLocaleDateString('en-US', { weekday: 'long' });
+
+            currentSchedule[day].forEach(item => {
+                const row = [
+                    dateStr,
+                    dayName,
+                    item.email,
+                    item.location,
+                    item.status
+                ].map(v => `"${v}"`).join(",");
+                csvContent += row + "\n";
+            });
+        });
+
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", `office_schedule_${currentSchedule._weekStart}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
     viewCalendarBtn.addEventListener('click', () => {
         calendarModal.classList.remove('hidden-state');
         backToMenuFromSched.classList.add('hidden-state'); // Hide back button if accessed from main page
@@ -227,6 +272,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     closeModalBtn.addEventListener('click', () => {
         calendarModal.classList.add('hidden-state');
+    });
+
+    downloadCalendarBtn.addEventListener('click', downloadScheduleCSV);
+
+    downloadPdfBtn.addEventListener('click', () => {
+        window.print();
     });
 
     // Close on overlay click
@@ -721,9 +772,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         return false;
                     });
                 });
-                
-                if (buddyRuleBroken) console.log(`[Buddy Rule] Trial rejected at attempt ${attempt}: Overlapping offsite days for buddies in ${loc}.`);
-
                 if (!rule3Broken && !buddyRuleBroken) {
                     success = true;
                     // Merge into main schedule
