@@ -662,7 +662,8 @@ document.addEventListener('DOMContentLoaded', () => {
     async function generateWeeklySchedule(holidays) {
         const buddyPairs = [
             ['adio.omolola@pitasonandsmartpro.com', 'titilope.hamzat@pitasonandsmartpro.com'],
-            ['ade.atoye@pitasonandsmartpro.com', 'iyanu.oluwatomisin@pitasonandsmartpro.com']
+            ['ade.atoye@pitasonandsmartpro.com', 'iyanu.oluwatomisin@pitasonandsmartpro.com'],
+            ['abdulfatai.taofeeq@pitasonandsmartpro.com', 'ayomide.gabriel@pitasonandsmartpro.com']
         ];
 
         const locations = ['Lagos', 'Ibadan'];
