@@ -707,43 +707,51 @@ document.addEventListener('DOMContentLoaded', () => {
                 const currentLocSchedule = {};
                 workingDays.forEach(d => currentLocSchedule[d] = []);
 
-                // Rule 1: Monday (or any day) - check for holiday first
-                if (holidays.includes(monDate)) {
-                    locStaff.forEach(s => currentLocSchedule[monDate].push({ ...s, status: 'Holiday' }));
-                } else {
-                    locStaff.forEach(s => currentLocSchedule[monDate].push({ ...s, status: 'Onsite' }));
+
+
+                const nonHolidayDays = workingDays.filter(d => !holidays.includes(d));
+                
+                // Rule: All staff present on Monday, or Tuesday if Monday is a holiday
+                let mandatoryOnsiteDay = workingDays[0]; // Monday
+                if (holidays.includes(mandatoryOnsiteDay)) {
+                    mandatoryOnsiteDay = workingDays[1]; // Tuesday
                 }
 
-                // Rule 4: Pick 2 Offsite days per staff from Tue-Fri
-                const tueFri = workingDays.slice(1);
-                const validTueFri = tueFri.filter(d => !holidays.includes(d));
+                const eligibleOffsiteDays = nonHolidayDays.filter(d => d !== mandatoryOnsiteDay);
+                const onsiteNeededFromEligible = Math.max(0, 3 - 1); // 3 total needed, 1 guaranteed by mandatory day
+                const maxOffsiteDays = Math.max(0, eligibleOffsiteDays.length - onsiteNeededFromEligible);
 
                 locStaff.forEach(s => {
-                    if (validTueFri.length <= 2) {
-                        // If only 1-2 days left, they have to be offsite on those? 
-                        // User: "Every staff only has 2 days off site even in event of holiday"
-                        // I'll pick up to 2.
-                        const shuffled = [...validTueFri].sort(() => 0.5 - Math.random());
-                        trialAssignments[s.email] = shuffled.slice(0, 2);
+                    if (maxOffsiteDays === 0) {
+                        trialAssignments[s.email] = [];
+                    } else if (eligibleOffsiteDays.length <= maxOffsiteDays) {
+                        const shuffled = [...eligibleOffsiteDays].sort(() => 0.5 - Math.random());
+                        trialAssignments[s.email] = shuffled.slice(0, maxOffsiteDays);
                     } else {
-                        // Try to pick 2 non-consecutive
+                        // Try to pick maxOffsiteDays non-consecutive
                         let picks = [];
                         let p_attempts = 0;
-                        while(picks.length < 2 && p_attempts < 20) {
+                        while(picks.length < maxOffsiteDays && p_attempts < 50) {
                             p_attempts++;
-                            const d = validTueFri[Math.floor(Math.random() * validTueFri.length)];
+                            const d = eligibleOffsiteDays[Math.floor(Math.random() * eligibleOffsiteDays.length)];
                             if (!picks.includes(d)) {
                                 // Rule 5: No consecutive offsite
                                 const isConsec = picks.some(p => Math.abs(p - d) === 1);
                                 if (!isConsec) picks.push(d);
                             }
                         }
+                        // If we couldn't find non-consecutive, just pick random ones
+                        if (picks.length < maxOffsiteDays) {
+                            const remaining = eligibleOffsiteDays.filter(d => !picks.includes(d));
+                            const shuffled = remaining.sort(() => 0.5 - Math.random());
+                            picks = [...picks, ...shuffled.slice(0, maxOffsiteDays - picks.length)];
+                        }
                         trialAssignments[s.email] = picks;
                     }
                 });
 
-                // Assign statuses for Tue-Fri based on trial
-                tueFri.forEach(d => {
+                // Assign statuses for all working days based on trial
+                workingDays.forEach(d => {
                     if (holidays.includes(d)) {
                         locStaff.forEach(s => currentLocSchedule[d].push({ ...s, status: 'Holiday' }));
                     } else {
@@ -754,15 +762,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 });
 
-                // Rule 3: Min 2 onsite per day (for working days T-F)
-                const rule3Broken = tueFri.some(d => {
+                // Rule 3: Min 2 onsite per day (for non-holiday working days)
+                const rule3Broken = workingDays.some(d => {
                     if (holidays.includes(d)) return false;
                     const onsiteCount = currentLocSchedule[d].filter(s => s.status === 'Onsite').length;
                     return onsiteCount < 2 && locStaff.length >= 2;
                 });
 
                 // --- Buddy Pairs Constraint ---
-                const buddyRuleBroken = tueFri.some(d => {
+                const buddyRuleBroken = workingDays.some(d => {
                     if (holidays.includes(d)) return false;
                     return buddyPairs.some(pair => {
                         const p1 = currentLocSchedule[d].find(s => s.email === pair[0]);
