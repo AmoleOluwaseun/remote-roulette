@@ -662,7 +662,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function generateWeeklySchedule(holidays) {
         const buddyPairs = [
             ['adio.omolola@pitasonandsmartpro.com', 'titilope.hamzat@pitasonandsmartpro.com'],
-            ['ade.atoye@pitasonandsmartpro.com', 'iyanu.oluwatomisin@pitasonandsmartpro.com'],
+            ['ade.atoyebi@pitasonandsmartpro.com', 'iyanu.oluwatomisin@pitasonandsmartpro.com'],
             ['abdulfatai.taofeeq@pitasonandsmartpro.com', 'ayomide.gabriel@pitasonandsmartpro.com']
         ];
 
@@ -781,7 +781,20 @@ document.addEventListener('DOMContentLoaded', () => {
                         return false;
                     });
                 });
-                if (!rule3Broken && !buddyRuleBroken) {
+
+                // --- Dependency Constraint ---
+                const dependencyRuleBroken = workingDays.some(d => {
+                    if (holidays.includes(d)) return false;
+                    const ade = currentLocSchedule[d].find(s => s.email === 'ade.atoyebi@pitasonandsmartpro.com');
+                    const joseph = currentLocSchedule[d].find(s => s.email === 'joseph.bamidele@pitasonandsmartpro.com');
+                    if (ade && joseph) {
+                        // Ade Onsite => Joseph Onsite (Broken if Ade is Onsite AND Joseph is Offsite)
+                        return ade.status === 'Onsite' && joseph.status === 'Offsite';
+                    }
+                    return false;
+                });
+
+                if (!rule3Broken && !buddyRuleBroken && !dependencyRuleBroken) {
                     success = true;
                     // Merge into main schedule
                     Object.keys(currentLocSchedule).forEach(d => {
