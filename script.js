@@ -662,7 +662,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function generateWeeklySchedule(holidays) {
         const buddyPairs = [
             ['adio.omolola@pitasonandsmartpro.com', 'titilope.hamzat@pitasonandsmartpro.com'],
-            ['ade.atoyebi@pitasonandsmartpro.com', 'iyanu.oluwatomisin@pitasonandsmartpro.com'],
+            ['ade.atoye@pitasonandsmartpro.com', 'iyanu.oluwatomisin@pitasonandsmartpro.com'],
             ['abdulfatai.taofeeq@pitasonandsmartpro.com', 'ayomide.gabriel@pitasonandsmartpro.com']
         ];
 
@@ -730,6 +730,28 @@ document.addEventListener('DOMContentLoaded', () => {
                     } else {
                         // Try to pick maxOffsiteDays non-consecutive
                         let picks = [];
+
+                        // Specialized Rule: Adio Omolola (Offsite on the 15th, increased Wednesday bias)
+                        if (s.email === 'adio.omolola@pitasonandsmartpro.com') {
+                            // 1. Force 15th if it falls in the current working week
+                            if (eligibleOffsiteDays.includes(15)) {
+                                picks.push(15);
+                            }
+
+                            // 2. Wednesday bias: 80% increased chance (baseline ~50% -> ~90%)
+                            const wedDay = workingDays.find(d => {
+                                const dateObj = new Date(weekStart);
+                                dateObj.setDate(d);
+                                return dateObj.getDay() === 3; // Wednesday
+                            });
+
+                            if (wedDay && eligibleOffsiteDays.includes(wedDay) && !picks.includes(wedDay)) {
+                                if (Math.random() < 0.9) {
+                                    picks.push(wedDay);
+                                }
+                            }
+                        }
+
                         let p_attempts = 0;
                         while(picks.length < maxOffsiteDays && p_attempts < 50) {
                             p_attempts++;
@@ -785,7 +807,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // --- Dependency Constraint ---
                 const dependencyRuleBroken = workingDays.some(d => {
                     if (holidays.includes(d)) return false;
-                    const ade = currentLocSchedule[d].find(s => s.email === 'ade.atoyebi@pitasonandsmartpro.com');
+                    const ade = currentLocSchedule[d].find(s => s.email === 'ade.atoye@pitasonandsmartpro.com');
                     const joseph = currentLocSchedule[d].find(s => s.email === 'joseph.bamidele@pitasonandsmartpro.com');
                     if (ade && joseph) {
                         // Ade Onsite => Joseph Onsite (Broken if Ade is Onsite AND Joseph is Offsite)
