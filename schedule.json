@@ -72,11 +72,6 @@
       "status": "Onsite"
     },
     {
-      "email": "oyegunle.emmanuel@pitasonandsmartpro",
-      "location": "Ibadan",
-      "status": "Onsite"
-    },
-    {
       "email": "seun.amole@pitasonandsmartpro.com",
       "location": "Ibadan",
       "status": "Onsite"
@@ -126,17 +121,17 @@
     {
       "email": "ajayi.timileyin@pitasonandsmartpro.com",
       "location": "Lagos",
-      "status": "Onsite"
+      "status": "Offsite"
     },
     {
       "email": "olayemi.oluwadamilare@pitasonandsmartpro.com",
       "location": "Lagos",
-      "status": "Onsite"
+      "status": "Offsite"
     },
     {
       "email": "olamide.osho@pitasonandsmartpro.com",
       "location": "Lagos",
-      "status": "Offsite"
+      "status": "Onsite"
     },
     {
       "email": "daniel.elemo@pitasonandsmartpro.com",
@@ -146,7 +141,7 @@
     {
       "email": "abdulfatai.taofeeq@pitasonandsmartpro.com",
       "location": "Ibadan",
-      "status": "Onsite"
+      "status": "Offsite"
     },
     {
       "email": "steven.enemchukwu@pitasonandsmartpro.com",
@@ -156,12 +151,12 @@
     {
       "email": "ayomide.gabriel@pitasonandsmartpro.com",
       "location": "Ibadan",
-      "status": "Offsite"
+      "status": "Onsite"
     },
     {
       "email": "franklin.nwawuba@pitasonandsmartpro.com",
       "location": "Ibadan",
-      "status": "Offsite"
+      "status": "Onsite"
     },
     {
       "email": "adio.omolola@pitasonandsmartpro.com",
@@ -171,12 +166,12 @@
     {
       "email": "moyinoluwadurosaiye@gmail.com",
       "location": "Ibadan",
-      "status": "Offsite"
+      "status": "Onsite"
     },
     {
       "email": "ade.atoye@pitasonandsmartpro.com",
       "location": "Ibadan",
-      "status": "Offsite"
+      "status": "Onsite"
     },
     {
       "email": "titilope.hamzat@pitasonandsmartpro.com",
@@ -184,14 +179,9 @@
       "status": "Offsite"
     },
     {
-      "email": "oyegunle.emmanuel@pitasonandsmartpro",
-      "location": "Ibadan",
-      "status": "Onsite"
-    },
-    {
       "email": "seun.amole@pitasonandsmartpro.com",
       "location": "Ibadan",
-      "status": "Onsite"
+      "status": "Offsite"
     },
     {
       "email": "tomiwa.amole@pitasonandsmartpro.com",
@@ -206,7 +196,7 @@
     {
       "email": "lolade.okunsanya@pitasonandsmartpro.com",
       "location": "Ibadan",
-      "status": "Offsite"
+      "status": "Onsite"
     },
     {
       "email": "kola.yusuf@pitasonandsmartpro.com",
@@ -221,7 +211,7 @@
     {
       "email": "abimbola.richard@pitasonandsmartpro.com",
       "location": "Ibadan",
-      "status": "Onsite"
+      "status": "Offsite"
     }
   ],
   "15": [
@@ -238,17 +228,17 @@
     {
       "email": "ajayi.timileyin@pitasonandsmartpro.com",
       "location": "Lagos",
-      "status": "Offsite"
+      "status": "Onsite"
     },
     {
       "email": "olayemi.oluwadamilare@pitasonandsmartpro.com",
       "location": "Lagos",
-      "status": "Offsite"
+      "status": "Onsite"
     },
     {
       "email": "olamide.osho@pitasonandsmartpro.com",
       "location": "Lagos",
-      "status": "Onsite"
+      "status": "Offsite"
     },
     {
       "email": "daniel.elemo@pitasonandsmartpro.com",
@@ -258,7 +248,7 @@
     {
       "email": "abdulfatai.taofeeq@pitasonandsmartpro.com",
       "location": "Ibadan",
-      "status": "Offsite"
+      "status": "Onsite"
     },
     {
       "email": "steven.enemchukwu@pitasonandsmartpro.com",
@@ -268,12 +258,12 @@
     {
       "email": "ayomide.gabriel@pitasonandsmartpro.com",
       "location": "Ibadan",
-      "status": "Onsite"
+      "status": "Offsite"
     },
     {
       "email": "franklin.nwawuba@pitasonandsmartpro.com",
       "location": "Ibadan",
-      "status": "Onsite"
+      "status": "Offsite"
     },
     {
       "email": "adio.omolola@pitasonandsmartpro.com",
@@ -283,12 +273,12 @@
     {
       "email": "moyinoluwadurosaiye@gmail.com",
       "location": "Ibadan",
-      "status": "Onsite"
+      "status": "Offsite"
     },
     {
       "email": "ade.atoye@pitasonandsmartpro.com",
       "location": "Ibadan",
-      "status": "Onsite"
+      "status": "Offsite"
     },
     {
       "email": "titilope.hamzat@pitasonandsmartpro.com",
@@ -296,14 +286,9 @@
       "status": "Onsite"
     },
     {
-      "email": "oyegunle.emmanuel@pitasonandsmartpro",
-      "location": "Ibadan",
-      "status": "Offsite"
-    },
-    {
       "email": "seun.amole@pitasonandsmartpro.com",
       "location": "Ibadan",
-      "status": "Offsite"
+      "status": "Onsite"
     },
     {
       "email": "tomiwa.amole@pitasonandsmartpro.com",
@@ -318,7 +303,7 @@
     {
       "email": "lolade.okunsanya@pitasonandsmartpro.com",
       "location": "Ibadan",
-      "status": "Onsite"
+      "status": "Offsite"
     },
     {
       "email": "kola.yusuf@pitasonandsmartpro.com",
@@ -333,14 +318,14 @@
     {
       "email": "abimbola.richard@pitasonandsmartpro.com",
       "location": "Ibadan",
-      "status": "Offsite"
+      "status": "Onsite"
     }
   ],
   "16": [
     {
       "email": "oluwasegun.odusanya@pitasonandsmartpro.com",
       "location": "Lagos",
-      "status": "Onsite"
+      "status": "Offsite"
     },
     {
       "email": "adeoye.esther@pitasonandsmartpro.com",
@@ -350,17 +335,17 @@
     {
       "email": "ajayi.timileyin@pitasonandsmartpro.com",
       "location": "Lagos",
-      "status": "Onsite"
+      "status": "Offsite"
     },
     {
       "email": "olayemi.oluwadamilare@pitasonandsmartpro.com",
       "location": "Lagos",
-      "status": "Onsite"
+      "status": "Offsite"
     },
     {
       "email": "olamide.osho@pitasonandsmartpro.com",
       "location": "Lagos",
-      "status": "Offsite"
+      "status": "Onsite"
     },
     {
       "email": "daniel.elemo@pitasonandsmartpro.com",
@@ -370,17 +355,17 @@
     {
       "email": "abdulfatai.taofeeq@pitasonandsmartpro.com",
       "location": "Ibadan",
-      "status": "Onsite"
+      "status": "Offsite"
     },
     {
       "email": "steven.enemchukwu@pitasonandsmartpro.com",
       "location": "Ibadan",
-      "status": "Offsite"
+      "status": "Onsite"
     },
     {
       "email": "ayomide.gabriel@pitasonandsmartpro.com",
       "location": "Ibadan",
-      "status": "Offsite"
+      "status": "Onsite"
     },
     {
       "email": "franklin.nwawuba@pitasonandsmartpro.com",
@@ -395,22 +380,17 @@
     {
       "email": "moyinoluwadurosaiye@gmail.com",
       "location": "Ibadan",
-      "status": "Offsite"
+      "status": "Onsite"
     },
     {
       "email": "ade.atoye@pitasonandsmartpro.com",
       "location": "Ibadan",
-      "status": "Offsite"
+      "status": "Onsite"
     },
     {
       "email": "titilope.hamzat@pitasonandsmartpro.com",
       "location": "Ibadan",
       "status": "Offsite"
-    },
-    {
-      "email": "oyegunle.emmanuel@pitasonandsmartpro",
-      "location": "Ibadan",
-      "status": "Onsite"
     },
     {
       "email": "seun.amole@pitasonandsmartpro.com",
@@ -425,7 +405,7 @@
     {
       "email": "iyanu.oluwatomisin@pitasonandsmartpro.com",
       "location": "Ibadan",
-      "status": "Onsite"
+      "status": "Offsite"
     },
     {
       "email": "lolade.okunsanya@pitasonandsmartpro.com",
@@ -435,7 +415,7 @@
     {
       "email": "kola.yusuf@pitasonandsmartpro.com",
       "location": "Ibadan",
-      "status": "Offsite"
+      "status": "Onsite"
     },
     {
       "email": "joseph.bamidele@pitasonandsmartpro.com",
@@ -445,14 +425,14 @@
     {
       "email": "abimbola.richard@pitasonandsmartpro.com",
       "location": "Ibadan",
-      "status": "Onsite"
+      "status": "Offsite"
     }
   ],
   "17": [
     {
       "email": "oluwasegun.odusanya@pitasonandsmartpro.com",
       "location": "Lagos",
-      "status": "Offsite"
+      "status": "Onsite"
     },
     {
       "email": "adeoye.esther@pitasonandsmartpro.com",
@@ -462,17 +442,17 @@
     {
       "email": "ajayi.timileyin@pitasonandsmartpro.com",
       "location": "Lagos",
-      "status": "Offsite"
+      "status": "Onsite"
     },
     {
       "email": "olayemi.oluwadamilare@pitasonandsmartpro.com",
       "location": "Lagos",
-      "status": "Offsite"
+      "status": "Onsite"
     },
     {
       "email": "olamide.osho@pitasonandsmartpro.com",
       "location": "Lagos",
-      "status": "Onsite"
+      "status": "Offsite"
     },
     {
       "email": "daniel.elemo@pitasonandsmartpro.com",
@@ -482,17 +462,17 @@
     {
       "email": "abdulfatai.taofeeq@pitasonandsmartpro.com",
       "location": "Ibadan",
-      "status": "Offsite"
+      "status": "Onsite"
     },
     {
       "email": "steven.enemchukwu@pitasonandsmartpro.com",
       "location": "Ibadan",
-      "status": "Onsite"
+      "status": "Offsite"
     },
     {
       "email": "ayomide.gabriel@pitasonandsmartpro.com",
       "location": "Ibadan",
-      "status": "Onsite"
+      "status": "Offsite"
     },
     {
       "email": "franklin.nwawuba@pitasonandsmartpro.com",
@@ -507,22 +487,17 @@
     {
       "email": "moyinoluwadurosaiye@gmail.com",
       "location": "Ibadan",
-      "status": "Onsite"
+      "status": "Offsite"
     },
     {
       "email": "ade.atoye@pitasonandsmartpro.com",
       "location": "Ibadan",
-      "status": "Onsite"
+      "status": "Offsite"
     },
     {
       "email": "titilope.hamzat@pitasonandsmartpro.com",
       "location": "Ibadan",
       "status": "Onsite"
-    },
-    {
-      "email": "oyegunle.emmanuel@pitasonandsmartpro",
-      "location": "Ibadan",
-      "status": "Offsite"
     },
     {
       "email": "seun.amole@pitasonandsmartpro.com",
@@ -537,7 +512,7 @@
     {
       "email": "iyanu.oluwatomisin@pitasonandsmartpro.com",
       "location": "Ibadan",
-      "status": "Offsite"
+      "status": "Onsite"
     },
     {
       "email": "lolade.okunsanya@pitasonandsmartpro.com",
@@ -547,7 +522,7 @@
     {
       "email": "kola.yusuf@pitasonandsmartpro.com",
       "location": "Ibadan",
-      "status": "Onsite"
+      "status": "Offsite"
     },
     {
       "email": "joseph.bamidele@pitasonandsmartpro.com",
@@ -557,7 +532,7 @@
     {
       "email": "abimbola.richard@pitasonandsmartpro.com",
       "location": "Ibadan",
-      "status": "Offsite"
+      "status": "Onsite"
     }
   ],
   "18": [],
